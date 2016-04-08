@@ -1,0 +1,14 @@
+mar. mai 19 14:34:39 CEST 2015
+srun: error: co2-nc01: task 0: Exited with exit code 100
+Traceback (most recent call last):
+  File "extract_feature.py", line 193, in <module>
+    connection = MongoClient(host='localhost',port=28018)
+  File "/usr/lib64/python2.6/site-packages/pymongo/mongo_client.py", line 337, in __init__
+    raise ConnectionFailure(str(e))
+pymongo.errors.ConnectionFailure: could not connect to localhost:28018: [Errno 111] Connection refused
+mar. mai 19 14:35:10 CEST 2015
+srun: Job step aborted: Waiting up to 2 seconds for job step to finish.
+slurmd[co2-nc03]: *** JOB 727032 CANCELLED AT 2015-05-19T14:57:47 ***
+srun: got SIGCONT
+slurmd[co2-nc03]: *** STEP 727032.0 CANCELLED AT 2015-05-19T14:57:47 ***
+srun: forcing job termination

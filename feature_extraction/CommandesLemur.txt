@@ -1,0 +1,12 @@
+Liste des docid des documents contenant un terme
+
+[quaesig@co2-ni01:bin] $ ./dumpTerm ../../CORPUS_TEST/IndexTREC78TITLE/ test -ext
+test
+FR940222-2-00036(2): 2 5 
+FR940223-2-00141(1): 8 
+
+
+Docid interne correspondant à un docid externe
+
+[quaesig@co2-ni01:bin] $ ./dumpDoc ../../CORPUS_TEST/IndexTREC78TITLE/ FT941-11704 -ext
+FT941-11704: 0
