@@ -105,10 +105,12 @@ class Match(object):
 
 
 
-	def play(self):
+	def play(self,std):
 		
 		#initialization
 		nbRound = 0
+
+		print std
 		
 		#1 Set the player's health
 		if self.health==0:
@@ -179,7 +181,7 @@ class Match(object):
 			current_player = self.doc_b	
 					
 
-		coeff = 10.0
+		coeff = 1
 
 		sameplayer = False
 		nbRun = 1 
@@ -216,16 +218,16 @@ class Match(object):
 							health_a -= 1
 					#print "\t Player 2 gagne (health_1: "+str(health_a)+" / health_2: "+str(health_b)
 					else :
-						delta = feat_value_a - feat_value_b
+						delta = (feat_value_a - feat_value_b)
 						#print delta
 
 						#if abs(delta) > 1 :
 							#print "Feature "+feat_name + " (A: "+str(feat_value_a)+" / B: "+str(feat_value_b)+")"
 
 						if delta > 0 :
-							health_b -= abs(delta)*coeff
-						else :
-							health_a -= abs(delta)*coeff
+							health_b -= (abs(delta)*coeff) /std[feat_name]
+						elif delta < 0 :
+							health_a -= (abs(delta)*coeff) /std[feat_name]
 
 					if self.strategy == 0 :
 						if feat_value_a > feat_value_b :
@@ -267,13 +269,13 @@ class Match(object):
 							health_a -= 1
 					else:
 						# And the winner is....
-						delta = feat_value_b - feat_value_a
+						delta = (feat_value_b - feat_value_a)
 						#if abs(delta) > 1 :
 						#	print "Feature "+feat_name + " (A: "+str(feat_value_a)+" / B: "+str(feat_value_b)+")"						
 						if delta > 0 :
-							health_a -= abs(delta)*coeff
-						else :
-							health_b -= abs(delta)*coeff
+							health_a -= (abs(delta)*coeff)  /std[feat_name]
+						elif delta < 0 :
+							health_b -= (abs(delta)*coeff)  /std[feat_name]
 				
 					if self.strategy == 0 :
 						if feat_value_b > feat_value_a :
@@ -547,12 +549,12 @@ class Match(object):
 		else:
 			return (1,1)
 
-	def run(self) :
+	def run(self,std) :
 		"Run the match"
 		#print("Match between {0} and {1}".format(self.doc_a, self.doc_b))
 		#return self.random_match() # while no clever strategy is implemented, let the power of randomness do the stuff
 		#return self.elaborated_match_v2()
-		return self.play()
+		return self.play(std)
 
 	def __str__(self):
 		"Match representation"

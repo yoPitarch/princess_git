@@ -17,7 +17,7 @@ class  RoundRobin(Tournament):
     ==========================================
 	'''
     
-	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],qrel={},accepted=False,optim="order"):
+	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],qrel={},accepted=False,optim="order",listStd={}):
 		'''
         Constructor:
             - Set the number of round to 1
@@ -30,6 +30,7 @@ class  RoundRobin(Tournament):
 		#self.ranking = {}
 		self.nb_round = 1
 		self.mapping={}
+		self.listStd=listStd
 
 		#print self.qrel
 
@@ -70,7 +71,7 @@ class  RoundRobin(Tournament):
 		for id_round in range(len(self.board)):
 			for id_match in range(len(self.board[id_round])):
 				current_match = self.board[id_round][id_match]
-				(points_a, points_b,draw_point) = current_match.run() # Run the match and get the respective number of points
+				(points_a, points_b,draw_point) = current_match.run(self.listStd) # Run the match and get the respective number of points
 				current_match.doc_a.score += points_a
 				current_match.doc_b.score += points_b
 
@@ -169,7 +170,7 @@ class  RoundRobin(Tournament):
 		for l in listCompetitors:
 			self.mapping[l.name]=l
 
-	# def printResults(self,path):
+	def printResults(self,path):
 
 	# 	def f(v):
 	# 		return (v[0]+v[3],v[1]+v[4])
@@ -250,22 +251,23 @@ class  RoundRobin(Tournament):
 	# 				nb += 1
 	# 		print str(nb)+" irrelevant loosers"				
 		
-	# 	file = open(path+"result_"+self.query+".txt", "w")
-	# 	#print "=============================\n    RESULTS    \n============================="
-	# 	self._competitors = sorted(self._competitors, key=attrgetter('score'), reverse=True)
-	# 	counter = 1
-	# 	for current_doc in self._competitors:
-	# 		'''
-	# 		if current_doc.score>0:
-	# 			file.write("{0} Q0 {1} {2} {3} {4}-princess\n".format(self.query,current_doc.name,counter,current_doc.score,self.query));
-	# 			counter += 1
-	# 		'''
-	# 		file.write("{0} Q0 {1} {2} {3} {4}-princess\n".format(self.query,current_doc.name,counter,current_doc.score,self.query));
-	# 		counter += 1
-	# 	#print current_doc
+	 	file = open(path+"result_"+self.query+".txt", "w")
+	 	#print "=============================\n    RESULTS    \n============================="
+	 	self._competitors = sorted(self._competitors, key=attrgetter('score'), reverse=True)
+	 	counter = 1
+	 	for current_doc in self._competitors:
+	 		'''
+	 		if current_doc.score>0:
+	 			file.write("{0} Q0 {1} {2} {3} {4}-princess\n".format(self.query,current_doc.name,counter,current_doc.score,self.query));
+	 			counter += 1
+			'''
+	 		file.write("{0} Q0 {1} {2} {3} {4}-princess\n".format(self.query,current_doc.name,counter,current_doc.score,self.query));
+	 		counter += 1
+	 	#print current_doc
 
-	# 	file.close()
+	 	file.close()
 
+	"""
 	def printResultsLetor(self,path):
 
 		file = open(path+"result_"+self.query+".txt", "w")
@@ -278,4 +280,4 @@ class  RoundRobin(Tournament):
 			file2.write("{0} {1} {2} {3}\n".format(self.query,current_doc.name,current_doc.score,current_doc.position));
 		file.close()
 		file2.close()
-
+	"""

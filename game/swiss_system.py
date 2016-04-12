@@ -24,7 +24,7 @@ class  SwissSystem(Tournament):
 	========================================== """
 
 	
-	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],accepted=False, optim="order"):
+	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],accepted=False, optim="order",listStd ={}):
 		"""
 		Constructor:
 			- Set the number of round to 1
@@ -36,6 +36,7 @@ class  SwissSystem(Tournament):
 		self.mappingDoc = {}
 		self.dictDoc ={}
 		self._competitors = []
+		self.listStd = listStd
 		Tournament.__init__(self,query,impact,health,nbFeat,strategy,nbRound,featsToRemove,accepted,optim)
 
 
@@ -66,7 +67,7 @@ class  SwissSystem(Tournament):
 					idPlayer2 = self.tournament.roundPairings[table][1]
 
 					m = Match(self.mappingDoc[idPlayer1],self.mappingDoc[idPlayer2],impact=self.impact,health=self.health,nbFeat=self.nbFeat,strategy=self.strategy,optim=self.optim)
-					self.tournament.reportMatch(table,m.run())
+					self.tournament.reportMatch(table,m.run(self.listStd))
 		self.feedCompetitors()
 
 

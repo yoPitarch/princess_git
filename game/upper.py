@@ -18,7 +18,7 @@ class  Upper(Tournament):
     ==========================================
 	'''
 
-	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],qrel={},accepted=False,model="f45",optim="order"):
+	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],qrel={},accepted=False,model="f45",optim="order",listStd = {}):
 		'''
         Constructor:
             - Set the number of round to 1
@@ -31,6 +31,7 @@ class  Upper(Tournament):
 		#self.ranking = {}
 		self.nb_round = 1
 		self.mapping={}
+		self.listStd = listStd
 
 		self.model = model
 
@@ -75,7 +76,7 @@ class  Upper(Tournament):
 		for id_round in range(len(self.board)):
 			for id_match in range(len(self.board[id_round])):
 				current_match = self.board[id_round][id_match]
-				(points_a, points_b,draw_point) = current_match.run() # Run the match and get the respective number of points
+				(points_a, points_b,draw_point) = current_match.run(self.listStd) # Run the match and get the respective number of points
 				rank_a = seedSet.index(current_match.doc_a.name)
 				rank_b = seedSet.index(current_match.doc_b.name)
 

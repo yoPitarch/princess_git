@@ -14,7 +14,7 @@ class  GroupStageOptim(Tournament):
     ==========================================
 	'''
     
-	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],qrel={},nbGroups=4,best=0.1,accepted=False,model="f45",optim="order"):
+	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],qrel={},nbGroups=4,best=0.1,accepted=False,model="f45",optim="order",listStd={}):
 		'''
         Constructor:
             - Set the number of round to 1
@@ -24,6 +24,7 @@ class  GroupStageOptim(Tournament):
 		self.board = []
 		self._competitors = []
 		self.results = {}
+		self.listStd = listStd
 		self.nb_round = 1
 		self.nb_groups = nbGroups
 		self.best = best
@@ -87,7 +88,7 @@ class  GroupStageOptim(Tournament):
 			#print "Running robin in group "+str(idGroup+1)
 			for id_match in range(len(self.board[idGroup])):
 				current_match = self.board[idGroup][id_match]
-				(points_a, points_b,draw_point) = current_match.run() # Run the match and get the respective number of points
+				(points_a, points_b,draw_point) = current_match.run(self.listStd) # Run the match and get the respective number of points
 				current_match.doc_a.score += points_a
 				current_match.doc_b.score += points_b
 
@@ -140,7 +141,7 @@ class  GroupStageOptim(Tournament):
 
 		for id_match in range(len(self.board[self.nb_groups])):
 			current_match = self.board[self.nb_groups][id_match]
-			(points_a, points_b,draw_point) = current_match.run() # Run the match and get the respective number of points
+			(points_a, points_b,draw_point) = current_match.run(self.listStd) # Run the match and get the respective number of points
 			current_match.doc_a.score += points_a
 			current_match.doc_b.score += points_b
 

@@ -13,7 +13,7 @@ class  RoundRobinReturnMatch(Tournament):
     ==========================================
 	'''
     
-	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],accepted=False,optim="order"):
+	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],accepted=False,optim="order",listStd={}):
 		'''
         Constructor:
             - Set the number of round to 1
@@ -25,6 +25,7 @@ class  RoundRobinReturnMatch(Tournament):
 		self.results = {}
 #        self.ranking = {}
 		self.nb_round = 1
+		self.listStd = listStd
 		for idX in range(self.nb_round):
 			self.board.append(list())
 
@@ -73,7 +74,7 @@ class  RoundRobinReturnMatch(Tournament):
 		for id_round in range(len(self.board)):
 			for id_match in range(len(self.board[id_round])):
 				current_match = self.board[id_round][id_match]
-				(points_a, points_b,draw_point) = current_match.run() # Run the match and get the respective number of points
+				(points_a, points_b,draw_point) = current_match.run(self.listStd) # Run the match and get the respective number of points
 				current_match.doc_a.score += points_a
 				current_match.doc_b.score += points_b
 				current_match.doc_a.opponents.append(current_match.doc_b.name)

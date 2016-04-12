@@ -14,7 +14,7 @@ class  GroupSwissOptim(Tournament):
     ==========================================
 	'''
     
-	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],qrel={},nbGroups=4,best=0.1,accepted=False,model="f45",optim="order"):
+	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],qrel={},nbGroups=4,best=0.1,accepted=False,model="f45",optim="order",listStd={}):
 		'''
         Constructor:
             - Set the number of round to 1
@@ -24,6 +24,7 @@ class  GroupSwissOptim(Tournament):
 		self.board = []
 		self._competitors = []
 		self.results = {}
+		self.listStd = listStd
 		self.nb_round = nbRound
 		self.nb_groups = nbGroups
 		self.best = best
@@ -32,9 +33,9 @@ class  GroupSwissOptim(Tournament):
 		self.model = model
 
 		for idX in range(self.nb_groups):
-			self.swisses.append(SwissSystem(query=query,impact=impact,health=health,nbFeat=nbFeat,strategy=strategy,nbRound=nbRound,featsToRemove=featsToRemove,optim=optim))
+			self.swisses.append(SwissSystem(query=query,impact=impact,health=health,nbFeat=nbFeat,strategy=strategy,nbRound=nbRound,featsToRemove=featsToRemove,optim=optim,listStd=self.listStd))
 
-		self.swisses.append(SwissSystem(query=query,impact=impact,health=health,nbFeat=nbFeat,strategy=strategy,nbRound=nbRound,featsToRemove=featsToRemove,optim=optim))
+		self.swisses.append(SwissSystem(query=query,impact=impact,health=health,nbFeat=nbFeat,strategy=strategy,nbRound=nbRound,featsToRemove=featsToRemove,optim=optim,listStd=self.listStd))
 
 
 

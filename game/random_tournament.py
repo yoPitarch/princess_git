@@ -13,7 +13,7 @@ class  RandomTournament(Tournament):
     ==========================================
 	'''
     
-	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],qrel={},accepted=False):
+	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],qrel={},accepted=False,listStd={}):
 		'''
         Constructor:
             - Set the number of round to 1
@@ -23,6 +23,7 @@ class  RandomTournament(Tournament):
 		self.board = []
 		self._competitors = []
 		self.results = {}
+		self.listStd = listStd
 		#self.ranking = {}
 		self.nb_round = 1
 

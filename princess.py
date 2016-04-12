@@ -186,27 +186,35 @@ def main():
 				list_doc.append(Document(name,list_feat))
 			#sys.exit()
 
+		colName = collection_name+"_std"
+		print colName
+		collection_std = db[colName]
+		listStd = {}
+		res = collection_std.find({'query':q},{'_id':0})
+		listStd =res[0]['stds']
+
+
 
 		if type_tournament == "robin" :
-			to = RoundRobin(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,qrel=dictQRels[q],accepted=accepted,optim=optim)
+			to = RoundRobin(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,qrel=dictQRels[q],accepted=accepted,optim=optim,listStd=listStd)
 		elif type_tournament == "return" :
-			to = RoundRobinReturnMatch(query=q,impact=0,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,accepted=accepted,optim=optim)
+			to = RoundRobinReturnMatch(query=q,impact=0,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,accepted=accepted,optim=optim,listStd=listStd)
 		elif type_tournament == "swiss" :
-			to = SwissSystem(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,accepted=accepted,optim=optim)
+			to = SwissSystem(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,accepted=accepted,optim=optim,listStd=listStd)
 		elif type_tournament == "random" :
-			to = RandomTournament(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,qrel=dictQRels[q],accepted=accepted,optim=optim)
+			to = RandomTournament(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,qrel=dictQRels[q],accepted=accepted,optim=optim,listStd=listStd)
 		elif type_tournament == "grouprobin" :
-			to = GroupStage(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbGroups=group,featsToRemove=features_to_remove,qrel=dictQRels[q],best=best,accepted=accepted,optim=optim)
+			to = GroupStage(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbGroups=group,featsToRemove=features_to_remove,qrel=dictQRels[q],best=best,accepted=accepted,optim=optim,listStd=listStd)
 		elif type_tournament == "grouprobinoptim" :
-			to = GroupStageOptim(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbGroups=group,featsToRemove=features_to_remove,qrel=dictQRels[q],best=best,accepted=accepted,model=model,optim=optim)			
+			to = GroupStageOptim(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbGroups=group,featsToRemove=features_to_remove,qrel=dictQRels[q],best=best,accepted=accepted,model=model,optim=optim,listStd=listStd)			
 		elif type_tournament == "groupswiss" :
-			to = GroupSwiss(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbGroups=group,nbRound=nb_rounds,featsToRemove=features_to_remove,qrel=dictQRels[q],best=best,accepted=accepted,optim=optim)
+			to = GroupSwiss(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbGroups=group,nbRound=nb_rounds,featsToRemove=features_to_remove,qrel=dictQRels[q],best=best,accepted=accepted,optim=optim,listStd=listStd)
 		elif type_tournament == "groupswissoptim" :
-			to = GroupSwissOptim(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbGroups=group,nbRound=nb_rounds,featsToRemove=features_to_remove,qrel=dictQRels[q],best=best,accepted=accepted,model=model,optim=optim)				
+			to = GroupSwissOptim(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbGroups=group,nbRound=nb_rounds,featsToRemove=features_to_remove,qrel=dictQRels[q],best=best,accepted=accepted,model=model,optim=optim,listStd=listStd)				
 		elif type_tournament == "seed" :
-			to = Seed(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,qrel=dictQRels[q],accepted=accepted,model=model,optim=optim)
+			to = Seed(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,qrel=dictQRels[q],accepted=accepted,model=model,optim=optim,listStd=listStd)
 		elif type_tournament == "upper" :
-			to = Upper(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,qrel=dictQRels[q],accepted=accepted,model=model,optim=optim)
+			to = Upper(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,qrel=dictQRels[q],accepted=accepted,model=model,optim=optim,listStd=listStd)
 		print "setCompetitors"	
 		to.setCompetitors(list_doc)
 		print len(list_doc)

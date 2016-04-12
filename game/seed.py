@@ -15,7 +15,7 @@ class  Seed(Tournament):
     ==========================================
 	'''
 
-	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],qrel={},accepted=False,model="f45",optim="order"):
+	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],qrel={},accepted=False,model="f45",optim="order",listStd = {}):
 		'''
         Constructor:
             - Set the number of round to 1
@@ -24,6 +24,7 @@ class  Seed(Tournament):
 		Tournament.__init__(self,query,impact,health,nbFeat,strategy,nbRound,featsToRemove,qrel,accepted,optim)
 		self.board = []
 		self._competitors = []
+		self.listStd = listStd
 		self.results = {}
 		#self.ranking = {}
 		self.nb_round = 1
@@ -67,7 +68,7 @@ class  Seed(Tournament):
 		for id_round in range(len(self.board)):
 			for id_match in range(len(self.board[id_round])):
 				current_match = self.board[id_round][id_match]
-				(points_a, points_b,draw_point) = current_match.run() # Run the match and get the respective number of points
+				(points_a, points_b,draw_point) = current_match.run(self.listStd) # Run the match and get the respective number of points
 
 				#if points_a > points_b and current_match.doc_a.name not in seedSet and current_match.doc_b.name in seedSet:
 				if points_a > points_b and current_match.doc_b.name in seedSet:
