@@ -1,5 +1,0 @@
-Repository statistics:
-documents:	528155
-unique terms:	22781
-total terms:	966243
-fields:		h3 doctitle headline ttl 

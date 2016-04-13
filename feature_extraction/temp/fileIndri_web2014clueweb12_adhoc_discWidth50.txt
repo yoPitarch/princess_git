@@ -1,5 +1,0 @@
-Repository statistics:
-documents:	733019372
-unique terms:	1119684966
-total terms:	554828257861
-fields:		title body heading url document 

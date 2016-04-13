@@ -46,8 +46,6 @@ for q in queries:
 		for i,e in enumerate(sortedList):
 			f.write(q+" Q0 "+e[0]+" "+str(e[1])+" "+str(i+1)+"\n")
 
-	sys.exit(0)
-
 
 
 
