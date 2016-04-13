@@ -1,8 +1,9 @@
 #! /usr/bin/python
-import getopt, sys
+import sys
+from operator import attrgetter
+from pprint import pprint
+
 from game import *
-from operator import attrgetter, itemgetter
-from collections import OrderedDict
 
 relStats = {}
 irrelStats = {}
@@ -70,11 +71,16 @@ class  RoundRobin(Tournament):
 		count = 1
 		for id_round in range(len(self.board)):
 			for id_match in range(len(self.board[id_round])):
+
 				current_match = self.board[id_round][id_match]
+				print 'before'
+				pprint(self.competitors)
 				(points_a, points_b,draw_point) = current_match.run(self.listStd) # Run the match and get the respective number of points
 				current_match.doc_a.score += points_a
 				current_match.doc_b.score += points_b
-
+				print 'after'
+				pprint(self.competitors)
+				sys.exit(0)
 
 				if len(self.qrel) > 0 : 
 					
