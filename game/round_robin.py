@@ -173,11 +173,7 @@ class  RoundRobin(Tournament):
 
                 """
 
-                for j in jobs:
-                    j.join()
 
-                pprint.pprint(self.competitors)
-                sys.exit()
                 # current_match.doc_a.opponents.append(current_match.doc_b.name)
                 # current_match.doc_b.opponents.append(current_match.doc_a.name)
                 # if count % 1000 == 0 :
@@ -185,7 +181,11 @@ class  RoundRobin(Tournament):
                 # count += 1
                 # Il manque a enregistrer le resultat de la partie (doit on le faire ? => En suspens)
 
+        for j in jobs:
+            j.join()
 
+        pprint.pprint(self.competitors)
+        sys.exit()
 
     def setCompetitors(self, listCompetitors):
         self._competitors = listCompetitors
