@@ -36,6 +36,7 @@ class  GroupStageOptim(Tournament):
         self.model = model
         self.accepted = accepted
         self.process = 100
+        self.mapping = {}
 
         for idX in range(self.nb_groups):
             self.board.append(list())
