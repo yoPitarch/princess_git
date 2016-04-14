@@ -245,6 +245,10 @@ class  GroupStageOptim(Tournament):
             self.mapping[l[1][0]].score += l[1][1]
 
     def setCompetitors(self, listCompetitors):
+
+        for l in listCompetitors:
+            self.mapping[l.name] = l
+
         self._competitors = listCompetitors
         # print self.featsToRemove
         # print self.accepted
