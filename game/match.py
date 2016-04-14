@@ -1,6 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
+import os
 import random
 from operator import attrgetter
 
@@ -555,7 +556,7 @@ class Match(object):
 		#return self.elaborated_match_v2()
 		# if hasattr(os, 'getppid'):  # only available on Unix
 		#	print 'parent process:', os.getppid()
-		# print 'process id:', os.getpid()
+        print 'process id:', os.getpid()
 		# print 'Doc A:', self.doc_a.name
 		# print 'Doc B:', self.doc_b.name
 		res = self.play(std)
