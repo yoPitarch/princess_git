@@ -1,5 +1,5 @@
 #! /usr/bin/python
-import sys
+import multiprocessing
 from operator import attrgetter
 from pprint import pprint
 
@@ -70,19 +70,26 @@ class  RoundRobin(Tournament):
         irrelStats = {}
 
         count = 1
+
+        jobs = []
+
         for id_round in range(len(self.board)):
             for id_match in range(len(self.board[id_round])):
 
                 current_match = self.board[id_round][id_match]
                 print 'before'
                 pprint(self.competitors)
-                (points_a, points_b, draw_point) = current_match.run(
-                    self.listStd)  # Run the match and get the respective number of points
-                current_match.doc_a.score += points_a
-                current_match.doc_b.score += points_b
-                print 'after'
-                pprint(self.competitors)
-                sys.exit(0)
+                p = multiprocessing.Process(target=current_match.run, args=(self.listStd,))
+                jobs.append(p)
+                p.start()
+                # (points_a, points_b, draw_point) = current_match.run(self.listStd)  # Run the match and get the respective number of points
+                # current_match.doc_a.score += points_a
+                # current_match.doc_b.score += points_b
+                # print 'after'
+                # pprint(self.competitors)
+                # sys.exit(0)
+
+                """
 
                 if len(self.qrel) > 0 :
 
@@ -156,12 +163,16 @@ class  RoundRobin(Tournament):
                             irrelStats[current_match.doc_b.name][5] += 1
                             irrelStats[current_match.doc_a.name][5] += 1
 
+                """
+
                 current_match.doc_a.opponents.append(current_match.doc_b.name)
                 current_match.doc_b.opponents.append(current_match.doc_a.name)
                 # if count % 1000 == 0 :
                 # print str(count)+"/"+str(len(self.board[id_round]))
                 count += 1
                 # Il manque a enregistrer le resultat de la partie (doit on le faire ? => En suspens)
+
+
 
     def setCompetitors(self, listCompetitors):
         self._competitors = listCompetitors
