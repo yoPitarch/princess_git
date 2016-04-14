@@ -211,6 +211,16 @@ class  RoundRobin(Tournament):
         #    self.mapping[l[0][0]].score += l[0][1]
         #    self.mapping[l[1][0]].score += l[1][1]
         # pprint.pprint(out_q)
+
+        for e in jobs: e.start()
+        for e in jobs: e.join()
+        while not out_q.empty():
+            l = out_q.get()
+            self.mapping[l[0][0]].score += l[0][1]
+            self.mapping[l[1][0]].score += l[1][1]
+
+
+
         pprint.pprint(self._competitors)
         print "[n=", nb_process, "] total time: ", (time.time() - begin), "ms"
         sys.exit()
