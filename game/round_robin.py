@@ -184,7 +184,7 @@ class  RoundRobin(Tournament):
         for j in jobs:
             j.join()
 
-        pprint.pprint(self.competitors)
+        pprint.pprint(self._competitors)
         sys.exit()
 
     def setCompetitors(self, listCompetitors):
