@@ -82,7 +82,7 @@ class  RoundRobin(Tournament):
         irrelStats = {}
 
         count = 0
-        nb_process = 2
+        nb_process = 20
         jobs = []
         out_q = multiprocessing.Queue()
         for id_round in range(len(self.board)):
