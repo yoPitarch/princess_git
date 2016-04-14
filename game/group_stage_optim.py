@@ -169,6 +169,8 @@ class  GroupStageOptim(Tournament):
 
         # It's time to order the groups by score
         count = 0
+        jobs = []
+        out_q = multiprocessing.Queue()
         finalist = []
         for group in self.groups:
             group = sorted(group, key=attrgetter('score'), reverse=True)
