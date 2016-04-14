@@ -1,7 +1,6 @@
 #! /usr/bin/python
 import multiprocessing
 import pprint
-import sys
 import time
 from operator import attrgetter
 
@@ -21,7 +20,7 @@ class  RoundRobin(Tournament):
     '''
 
     def __init__(self, query=None, impact=0, health=0, nbFeat=0, strategy=1, nbRound=10, featsToRemove=[], qrel={},
-                 accepted=False, optim="order", listStd={}):
+                 accepted=False, optim="order", listStd={}, process=100):
         '''
         Constructor:
             - Set the number of round to 1
@@ -36,6 +35,7 @@ class  RoundRobin(Tournament):
         self.nb_round = 1
         self.mapping = {}
         self.listStd = listStd
+        self.process = process
 
         #print self.qrel
 
@@ -82,7 +82,7 @@ class  RoundRobin(Tournament):
         irrelStats = {}
 
         count = 0
-        nb_process = 40
+        nb_process = self.process
         jobs = []
         out_q = multiprocessing.Queue()
         for id_round in range(len(self.board)):
@@ -223,7 +223,7 @@ class  RoundRobin(Tournament):
 
         pprint.pprint(self._competitors)
         print "[n=", nb_process, "] total time: ", (time.time() - begin), "ms"
-        sys.exit()
+        # sys.exit()
 
     def setCompetitors(self, listCompetitors):
         self._competitors = listCompetitors

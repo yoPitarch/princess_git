@@ -1,14 +1,14 @@
 #! /usr/bin/python
 
-import random
+import getopt
 import os
-import getopt, sys
-import pymongo
-from game import *
+import sys
+
 from pymongo import MongoClient
+
 from document.document import Document
 from document.feature import Feature
-
+from game import *
 
 # Test round robin
 #robin = RoundRobin()
@@ -69,7 +69,10 @@ def main():
 
 	# Handle user options
 	try:
-		opts,args = getopt.getopt(sys.argv[1:], "dht:i:l:s:n:r:f:vc:b:g:am:o:", ["debug","help", "type=", "impact=", "life=", "strategy=","nbFeats=", "rounds=",  "featureList=", "verbose",'collection=','group=','accepted','model=','optim'])
+		opts, args = getopt.getopt(sys.argv[1:], "dht:i:l:s:n:r:f:vc:b:g:am:o:p:",
+								   ["debug", "help", "type=", "impact=", "life=", "strategy=", "nbFeats=", "rounds=",
+									"featureList=", "verbose", 'collection=', 'group=', 'accepted', 'model=', 'optim',
+									'process'])
 	except getopt.GetoptError as err:
 		# print help information and exit:
 		print str(err) # will print something like "option -a not recognized"
@@ -90,6 +93,7 @@ def main():
 	impact = 0
 	features_to_remove = []
 	strategy =1
+	process = 100
 	life=0
 	best= 0.1
 	accepted = False
@@ -120,8 +124,10 @@ def main():
 		elif o in ("-r", "--rounds"): 
 			nb_rounds = int(a)
 		elif o in ("-m", "--model"): 
-			model = str(a)			
-		elif o in ("-b", "--best"): 
+			model = str(a)
+		elif o in ("-p", "--process"):
+			process = str(a)
+		elif o in ("-b", "--best"):
 			best = float(a)			
 		elif o in ("-c", "--collection"):
 			collection_name = a	
@@ -196,7 +202,9 @@ def main():
 
 
 		if type_tournament == "robin" :
-			to = RoundRobin(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,qrel=dictQRels[q],accepted=accepted,optim=optim,listStd=listStd)
+			to = RoundRobin(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbRound=nb_rounds,
+							featsToRemove=features_to_remove, qrel=dictQRels[q], accepted=accepted, optim=optim,
+							listStd=listStd, process=process)
 		elif type_tournament == "return" :
 			to = RoundRobinReturnMatch(query=q,impact=0,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,accepted=accepted,optim=optim,listStd=listStd)
 		elif type_tournament == "swiss" :
