@@ -65,8 +65,10 @@ class  RoundRobin(Tournament):
     def runParallel(self, match):
         (points_a, points_b, draw_point) = match.run(
             self.listStd)  # Run the match and get the respective number of points
-        match.doc_a.score += points_a
-        match.doc_b.score += points_b
+        # match.doc_a.score += points_a
+        # match.doc_b.score += points_b
+        self.mapping[match.doc_a.name].score += points_a
+        self.mapping[match.doc_b.name].score += points_b
 
     def runCompetition(self):
         global relStats, irrelStats
