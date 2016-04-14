@@ -85,10 +85,10 @@ class  RoundRobin(Tournament):
         out_q = multiprocessing.Queue()
         for id_round in range(len(self.board)):
             for id_match in range(len(self.board[id_round])):
-                print count
+                print count, id_match
                 if count != 0 and count % nb_process == 0:
-                    for e in jobs: p.start()
-                    for e in jobs: p.join()
+                    for e in jobs: e.start()
+                    for e in jobs: e.join()
                     while not out_q.empty():
                         l = out_q.get()
                         self.mapping[l[0][0]].score += l[0][1]
@@ -98,8 +98,8 @@ class  RoundRobin(Tournament):
                     out_q = multiprocessing.Queue()
 
                 current_match = self.board[id_round][id_match]
-                p = multiprocessing.Process(target=self.runParallel, args=(current_match, out_q))
-                jobs.append(p)
+                # p = multiprocessing.Process(target=self.runParallel, args=(current_match, out_q))
+                jobs.append(multiprocessing.Process(target=self.runParallel, args=(current_match, out_q)))
                 count += 1
 
 
