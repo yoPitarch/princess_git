@@ -559,8 +559,11 @@ class Match(object):
 		print 'process id:', os.getpid()
 		print 'Doc A:', self.doc_a.name
 		print 'Doc B:', self.doc_b.name
+		res = self.play(std)
+		print res
 		print "----------------------"
-		return self.play(std)
+		return res
+
 
 	def __str__(self):
 		"Match representation"
