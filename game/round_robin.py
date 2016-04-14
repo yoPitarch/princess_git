@@ -1,7 +1,7 @@
 #! /usr/bin/python
 import multiprocessing
+import sys
 from operator import attrgetter
-from pprint import pprint
 
 from game import *
 
@@ -76,9 +76,11 @@ class  RoundRobin(Tournament):
         for id_round in range(len(self.board)):
             for id_match in range(len(self.board[id_round])):
 
+                if count == 5: sys.exit()
+
                 current_match = self.board[id_round][id_match]
-                print 'before'
-                pprint(self.competitors)
+                # print 'before'
+                # pprint(self.competitors)
                 p = multiprocessing.Process(target=current_match.run, args=(self.listStd,))
                 jobs.append(p)
                 p.start()
@@ -88,7 +90,7 @@ class  RoundRobin(Tournament):
                 # print 'after'
                 # pprint(self.competitors)
                 # sys.exit(0)
-
+                count += 1
                 """
 
                 if len(self.qrel) > 0 :

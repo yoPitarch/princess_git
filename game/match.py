@@ -1,10 +1,10 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
+import os
 import random
-import sys
-from operator import itemgetter, attrgetter
-from document.document import Document
+from operator import attrgetter
+
 from document.feature import Feature
 
 
@@ -554,6 +554,12 @@ class Match(object):
 		#print("Match between {0} and {1}".format(self.doc_a, self.doc_b))
 		#return self.random_match() # while no clever strategy is implemented, let the power of randomness do the stuff
 		#return self.elaborated_match_v2()
+		if hasattr(os, 'getppid'):  # only available on Unix
+			print 'parent process:', os.getppid()
+		print 'process id:', os.getpid()
+		print 'Doc A:', self.doc_a.name
+		print 'Doc B:', self.doc_b.name
+		print "----------------------"
 		return self.play(std)
 
 	def __str__(self):
