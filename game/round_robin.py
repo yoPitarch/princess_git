@@ -188,7 +188,9 @@ class  RoundRobin(Tournament):
             j.join()
 
         while not out_q.empty():
-            print out_q.get()
+            l = out_q.get()
+            self.mapping[l[0][0]].score += l[0][1]
+            self.mapping[l[1][0]].score += l[1][1]
         # pprint.pprint(out_q)
         pprint.pprint(self._competitors)
         sys.exit()
