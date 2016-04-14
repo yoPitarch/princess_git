@@ -79,26 +79,44 @@ class  RoundRobin(Tournament):
         relStats = {}
         irrelStats = {}
 
-        count = 1
-
+        count = 0
+        nb_process = 4
         jobs = []
         out_q = multiprocessing.Queue()
         for id_round in range(len(self.board)):
             for id_match in range(len(self.board[id_round])):
-                # if count < 5:
+
+                if count != 0 and count % nb_process == 0:
+                    for e in jobs: p.start()
+                    for e in jobs: p.join()
+                    while not out_q.empty():
+                        l = out_q.get()
+                        self.mapping[l[0][0]].score += l[0][1]
+                        self.mapping[l[1][0]].score += l[1][1]
+
+                    jobs = []
+                    out_q = multiprocessing.Queue()
+
                 current_match = self.board[id_round][id_match]
-                # print 'before'
-                # pprint(self.competitors)
                 p = multiprocessing.Process(target=self.runParallel, args=(current_match, out_q))
                 jobs.append(p)
-                p.start()
+                count += 1
+
+
+                # if count < 5:
+                # current_match = self.board[id_round][id_match]
+                # print 'before'
+                # pprint(self.competitors)
+                # p = multiprocessing.Process(target=self.runParallel, args=(current_match, out_q))
+                # jobs.append(p)
+                #p.start()
                 # (points_a, points_b, draw_point) = current_match.run(self.listStd)  # Run the match and get the respective number of points
                 # current_match.doc_a.score += points_a
                 # current_match.doc_b.score += points_b
                 # print 'after'
                 # pprint(self.competitors)
                 # sys.exit(0)
-                # count += 1
+                #count += 1
                 """
 
                 if len(self.qrel) > 0 :
@@ -183,13 +201,13 @@ class  RoundRobin(Tournament):
                 # count += 1
                 # Il manque a enregistrer le resultat de la partie (doit on le faire ? => En suspens)
 
-        for j in jobs:
-            j.join()
+        # for j in jobs:
+        #    j.join()
 
-        while not out_q.empty():
-            l = out_q.get()
-            self.mapping[l[0][0]].score += l[0][1]
-            self.mapping[l[1][0]].score += l[1][1]
+        # while not out_q.empty():
+        #    l = out_q.get()
+        #    self.mapping[l[0][0]].score += l[0][1]
+        #    self.mapping[l[1][0]].score += l[1][1]
         # pprint.pprint(out_q)
         pprint.pprint(self._competitors)
         sys.exit()
