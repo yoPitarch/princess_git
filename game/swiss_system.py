@@ -1,10 +1,12 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
+import multiprocessing
 from operator import attrgetter
 
 from game import *
 from pypair import SwissTournamentAPI
+
 
 class  SwissSystem(Tournament):
     """ ==========================================
@@ -60,18 +62,46 @@ class  SwissSystem(Tournament):
             self.dictDoc[doc.name] = count
             count += 1
 
+    def runParallel(self, id, match, out_q):
+        out_q.put([id, match.run(self.listStd)])
+
     def runCompetition(self):
+
+        process = self.process
+        jobs = []
+        out_q = multiprocessing.Queue()
         for i in range(self.nb_rounds):
             pairings = self.tournament.pairRound()
+            count = 0
             for table in pairings:
                 if not type(pairings[table]) is str:
-                    print table
+                    if count == 0 and count % process == 0:
+                        for e in jobs: e.start()
+                        for e in jobs: e.join()
+                        while not out_q.empty():
+                            l = out_q.get()
+                            self.tournament.reportMatch(l[0], l[1])
+                        jobs = []
+                        out_q = multiprocessing.Queue()
+
+                    # print table
                     idPlayer1 = self.tournament.roundPairings[table][0]
                     idPlayer2 = self.tournament.roundPairings[table][1]
 
                     m = Match(self.mappingDoc[idPlayer1], self.mappingDoc[idPlayer2], impact=self.impact,
                               health=self.health, nbFeat=self.nbFeat, strategy=self.strategy, optim=self.optim)
-                    self.tournament.reportMatch(table, m.run(self.listStd))
+                    jobs.append(multiprocessing.Process(target=self.runParallel, args=(table, m, out_q)))
+                    count += 1
+                    # self.tournament.reportMatch(table, m.run(self.listStd))
+
+            for e in jobs: e.start()
+            for e in jobs: e.join()
+            while not out_q.empty():
+                l = out_q.get()
+                self.tournament.reportMatch(l[0], l[1])
+            jobs = []
+            out_q = multiprocessing.Queue()
+
         self.feedCompetitors()
 
     def feedCompetitors(self):
