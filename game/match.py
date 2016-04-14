@@ -1,7 +1,6 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-import os
 import random
 from operator import attrgetter
 
@@ -110,7 +109,7 @@ class Match(object):
 		#initialization
 		nbRound = 0
 
-		print std
+		# print std
 		
 		#1 Set the player's health
 		if self.health==0:
@@ -554,14 +553,14 @@ class Match(object):
 		#print("Match between {0} and {1}".format(self.doc_a, self.doc_b))
 		#return self.random_match() # while no clever strategy is implemented, let the power of randomness do the stuff
 		#return self.elaborated_match_v2()
-		if hasattr(os, 'getppid'):  # only available on Unix
-			print 'parent process:', os.getppid()
-		print 'process id:', os.getpid()
-		print 'Doc A:', self.doc_a.name
-		print 'Doc B:', self.doc_b.name
+		# if hasattr(os, 'getppid'):  # only available on Unix
+		#	print 'parent process:', os.getppid()
+		# print 'process id:', os.getpid()
+		# print 'Doc A:', self.doc_a.name
+		#print 'Doc B:', self.doc_b.name
 		res = self.play(std)
-		print res
-		print "----------------------"
+		# print res
+		#print "----------------------"
 		return res
 
 

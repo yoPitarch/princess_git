@@ -85,21 +85,20 @@ class  RoundRobin(Tournament):
         out_q = multiprocessing.Queue()
         for id_round in range(len(self.board)):
             for id_match in range(len(self.board[id_round])):
-
-                if count < 5:
-                    current_match = self.board[id_round][id_match]
-                    # print 'before'
-                    # pprint(self.competitors)
-                    p = multiprocessing.Process(target=self.runParallel, args=(current_match, out_q))
-                    jobs.append(p)
-                    p.start()
-                    # (points_a, points_b, draw_point) = current_match.run(self.listStd)  # Run the match and get the respective number of points
-                    # current_match.doc_a.score += points_a
-                    # current_match.doc_b.score += points_b
-                    # print 'after'
-                    # pprint(self.competitors)
-                    # sys.exit(0)
-                    count += 1
+                # if count < 5:
+                current_match = self.board[id_round][id_match]
+                # print 'before'
+                # pprint(self.competitors)
+                p = multiprocessing.Process(target=self.runParallel, args=(current_match, out_q))
+                jobs.append(p)
+                p.start()
+                # (points_a, points_b, draw_point) = current_match.run(self.listStd)  # Run the match and get the respective number of points
+                # current_match.doc_a.score += points_a
+                # current_match.doc_b.score += points_b
+                # print 'after'
+                # pprint(self.competitors)
+                # sys.exit(0)
+                # count += 1
                 """
 
                 if len(self.qrel) > 0 :
