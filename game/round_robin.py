@@ -85,7 +85,7 @@ class  RoundRobin(Tournament):
         out_q = multiprocessing.Queue()
         for id_round in range(len(self.board)):
             for id_match in range(len(self.board[id_round])):
-
+                print count
                 if count != 0 and count % nb_process == 0:
                     for e in jobs: p.start()
                     for e in jobs: p.join()
