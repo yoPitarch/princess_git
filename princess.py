@@ -252,7 +252,7 @@ def main():
         print "printResults"
         to.printResults(output_directory)
 
-    print "[ n=", process, "] total time:", (time.time() - begin), "ms"
+    print "[ n=", process, type_tournament, "] total time:", (time.time() - begin), "ms"
 
 
 """
