@@ -2,6 +2,7 @@
 import multiprocessing
 import pprint
 import sys
+import time
 from operator import attrgetter
 
 from game import *
@@ -74,6 +75,7 @@ class  RoundRobin(Tournament):
     def runCompetition(self):
         global relStats, irrelStats
 
+        begin = time.time()
         self.schedule()
 
         relStats = {}
@@ -210,6 +212,7 @@ class  RoundRobin(Tournament):
         #    self.mapping[l[1][0]].score += l[1][1]
         # pprint.pprint(out_q)
         pprint.pprint(self._competitors)
+        print "[n=", nb_process, "] total time: ", (time.time() - begin), "ms"
         sys.exit()
 
     def setCompetitors(self, listCompetitors):
