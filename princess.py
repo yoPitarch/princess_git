@@ -129,7 +129,7 @@ def main():
         elif o in ("-m", "--model"):
             model = str(a)
         elif o in ("-p", "--process"):
-            process = str(a)
+            process = int(a)
         elif o in ("-b", "--best"):
             best = float(a)
         elif o in ("-c", "--collection"):
