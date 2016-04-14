@@ -62,13 +62,14 @@ class  RoundRobin(Tournament):
 
     competitors = property(_get_competitors, _set_competitors)  #Competitor description
 
-    def runParallel(self, match):
+    def runParallel(self, match, out_q):
         (points_a, points_b, draw_point) = match.run(
             self.listStd)  # Run the match and get the respective number of points
+        out_q.put([(match.doc_a.name, points_a), (match.doc_b.name, points_b)])
         # match.doc_a.score += points_a
         # match.doc_b.score += points_b
-        self.mapping[match.doc_a.name].score += points_a
-        self.mapping[match.doc_b.name].score += points_b
+        # self.mapping[match.doc_a.name].score += points_a
+        # self.mapping[match.doc_b.name].score += points_b
 
     def runCompetition(self):
         global relStats, irrelStats
@@ -81,7 +82,7 @@ class  RoundRobin(Tournament):
         count = 1
 
         jobs = []
-
+        out_q = multiprocessing.Queue()
         for id_round in range(len(self.board)):
             for id_match in range(len(self.board[id_round])):
 
@@ -89,7 +90,7 @@ class  RoundRobin(Tournament):
                     current_match = self.board[id_round][id_match]
                     # print 'before'
                     # pprint(self.competitors)
-                    p = multiprocessing.Process(target=self.runParallel, args=(current_match,))
+                    p = multiprocessing.Process(target=self.runParallel, args=(current_match, out_q))
                     jobs.append(p)
                     p.start()
                     # (points_a, points_b, draw_point) = current_match.run(self.listStd)  # Run the match and get the respective number of points
@@ -185,7 +186,7 @@ class  RoundRobin(Tournament):
 
         for j in jobs:
             j.join()
-
+        pprint.pprint(out_q)
         pprint.pprint(self._competitors)
         sys.exit()
 
