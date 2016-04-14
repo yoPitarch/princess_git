@@ -186,7 +186,10 @@ class  RoundRobin(Tournament):
 
         for j in jobs:
             j.join()
-        pprint.pprint(out_q)
+
+        while not out_q.empty():
+            print out_q.get()
+        # pprint.pprint(out_q)
         pprint.pprint(self._competitors)
         sys.exit()
 
