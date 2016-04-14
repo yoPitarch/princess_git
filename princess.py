@@ -227,7 +227,7 @@ def main():
         elif type_tournament == "grouprobinoptim":
             to = GroupStageOptim(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbGroups=group,
                                  featsToRemove=features_to_remove, qrel=dictQRels[q], best=best, accepted=accepted,
-                                 model=model, optim=optim, listStd=listStd)
+                                 model=model, optim=optim, listStd=listStd, process=process)
         elif type_tournament == "groupswiss":
             to = GroupSwiss(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbGroups=group,
                             nbRound=nb_rounds, featsToRemove=features_to_remove, qrel=dictQRels[q], best=best,
