@@ -1,6 +1,5 @@
 #! /usr/bin/python
 import multiprocessing
-import pprint
 import time
 from operator import attrgetter
 
@@ -221,8 +220,8 @@ class  RoundRobin(Tournament):
 
 
 
-        pprint.pprint(self._competitors)
-        print "[n=", nb_process, "] total time: ", (time.time() - begin), "ms"
+            # pprint.pprint(self._competitors)
+            # print "[n=", nb_process, "] total time: ", (time.time() - begin), "ms"
         # sys.exit()
 
     def setCompetitors(self, listCompetitors):

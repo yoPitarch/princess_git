@@ -3,6 +3,7 @@
 import getopt
 import os
 import sys
+import time
 
 from pymongo import MongoClient
 
@@ -169,6 +170,8 @@ def main():
 	if not os.path.exists(output_directory):
 		os.makedirs(output_directory)
 
+    begin = time.time()
+
 	for q in queries:
 		#print "Query "+q
 		dictQRels.setdefault(q,{})
@@ -231,7 +234,7 @@ def main():
 		print "printResults"
 		to.printResults(output_directory)
 
-
+    print "[ n=", process, "] total time:", (time.time() - begin), "ms"
 		
 
 		
