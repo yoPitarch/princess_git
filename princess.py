@@ -215,7 +215,8 @@ def main():
                                        optim=optim, listStd=listStd)
         elif type_tournament == "swiss":
             to = SwissSystem(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbRound=nb_rounds,
-                             featsToRemove=features_to_remove, accepted=accepted, optim=optim, listStd=listStd)
+                             featsToRemove=features_to_remove, accepted=accepted, optim=optim, listStd=listStd,
+                             process=process)
         elif type_tournament == "random":
             to = RandomTournament(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy,
                                   nbRound=nb_rounds, featsToRemove=features_to_remove, qrel=dictQRels[q],
@@ -231,11 +232,11 @@ def main():
         elif type_tournament == "groupswiss":
             to = GroupSwiss(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbGroups=group,
                             nbRound=nb_rounds, featsToRemove=features_to_remove, qrel=dictQRels[q], best=best,
-                            accepted=accepted, optim=optim, listStd=listStd)
+                            accepted=accepted, optim=optim, listStd=listStd, process=process)
         elif type_tournament == "groupswissoptim":
             to = GroupSwissOptim(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbGroups=group,
                                  nbRound=nb_rounds, featsToRemove=features_to_remove, qrel=dictQRels[q], best=best,
-                                 accepted=accepted, model=model, optim=optim, listStd=listStd)
+                                 accepted=accepted, model=model, optim=optim, listStd=listStd, process=process)
         elif type_tournament == "seed":
             to = Seed(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbRound=nb_rounds,
                       featsToRemove=features_to_remove, qrel=dictQRels[q], accepted=accepted, model=model, optim=optim,
