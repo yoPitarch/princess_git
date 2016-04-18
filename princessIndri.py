@@ -1,14 +1,14 @@
 #! /usr/bin/python
 
-import random
+import getopt
 import os
-import getopt, sys
-import pymongo
-from game import *
+import sys
+
 from pymongo import MongoClient
+
 from document.document import Document
 from document.feature import Feature
-
+from game import *
 
 # Test round robin
 #robin = RoundRobin()
@@ -159,7 +159,9 @@ def main():
 		if type_tournament == "robin" :
 			to = RoundRobin(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,qrel=dictQRels[q],accepted=accepted,optim=optim)
 		elif type_tournament == "return" :
-			to = RoundRobinReturnMatch(query=q,impact=0,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,accepted=accepted,optim=optim)
+			to = RoundRobinReturnMatch(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy,
+									   nbRound=nb_rounds, featsToRemove=features_to_remove, accepted=accepted,
+									   optim=optim)
 		elif type_tournament == "swiss" :
 			to = SwissSystem(query=q,impact=impact,health=life,nbFeat=nbFeats,strategy=strategy,nbRound=nb_rounds,featsToRemove=features_to_remove,accepted=accepted,optim=optim)
 		elif type_tournament == "random" :

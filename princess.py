@@ -300,6 +300,8 @@ def main():
             to.printResults(output_directory)
 
     print "[ n=", process, type_tournament, "] total time:", (time.time() - begin), "ms"
+    with open(output_directory + "completed.txt", "w") as f:
+        f.write("completed!!")
 
 
 """
