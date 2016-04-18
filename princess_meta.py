@@ -93,6 +93,30 @@ def checkDoneXp():
     return listCompleted
 
 
+def extractMapXpe():
+    if "trec8" in rep:
+        table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", '-M50', "-q",
+                 "/osirim/sig/CORPUS/TREC-ADHOC/QRELS/qrels.401-450.disk4.disk5", '"' + outfilename + '"', ">",
+                 '"' + outfilenameeval + '"']
+    else:
+        table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", "-M50", "-q",
+                 "/osirim/sig/CORPUS/TREC-ADHOC/QRELS/qrels.351-400.disk4.disk5", '"' + outfilename + '"', ">",
+                 '"' + outfilenameeval + '"']
+    # print " ".join(table)
+    os.system(" ".join(table))
+
+    f = "result_trec.txt"
+    with open(pathMainDirPrincessResults + rep + "/" + f, 'r') as myFile:
+        for line in myFile:
+            for i in re.finditer(regex, line):
+                feat = i.group(2)
+                dictOutput.setdefault(rep, {})
+                dictOutput[rep][feat] = float(i.group(3))
+
+
+
+
+
 # Expe generation
 generate_script()
 
@@ -106,4 +130,3 @@ while get_running_jobs() > 0:
         l = checkDoneXp()
         if len(l) > 0:
             for xp in l:
-                toto
