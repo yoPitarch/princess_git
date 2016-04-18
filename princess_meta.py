@@ -99,6 +99,7 @@ def generate_script():
 
 
 def checkDoneXp():
+    global dirResult
     def runOk(dirFold):
 
         listDirXp = os.listdir(dirFold)
