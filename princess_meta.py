@@ -165,8 +165,8 @@ generate_script()
 
 # Script execution
 os.system("scancel -u quaesig")
-os.system("chmod a+x " + dirname + "/run.sh")
-os.system("./" + dirname + "/run.sh")
+os.system("chmod a+x " + dirname + "run.sh")
+os.system("." + dirname + "run.sh")
 
 startTime = time.time()
 while get_running_jobs() > 0:
