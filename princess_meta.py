@@ -162,8 +162,9 @@ def runTest(fold, best):
 
 
 def findBestConfig(fold):
+    listResults = {}
     listResults = maps[fold]
-    sorted_x = sorted(x.items(), key=operator.itemgetter(1), reverse=True)
+    sorted_x = sorted(listResults.items(), key=operator.itemgetter(1), reverse=True)
     best = sorted_x[0]
     return best
 
@@ -186,9 +187,9 @@ os.system(dirname + "run.sh")
 interval = 10
 startTime = time.time()
 while get_running_jobs() > 0:
-    time = (time.time() - startTime)
-    print time
-    if time % interval == 0:
+    t = (time.time() - startTime)
+    print t
+    if t % interval == 0:
         print "je checke"
         l = checkDoneXp()
         if len(l) > 0:
