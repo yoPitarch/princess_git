@@ -2,7 +2,6 @@
 import operator
 import os
 import re
-import subprocess
 import time
 from os.path import join
 
@@ -25,11 +24,12 @@ xpNb = len(listType) * len(listFeature) * len(listImpact) * len(listRound) * len
 
 
 def get_running_jobs():
-    p = subprocess.Popen(['squeue', '-u', 'quaesig', '|wc', '-l'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out, err = p.communicate()
-    print "nbprocess:", out
-    # print out
-    runningJobs = int(out.strip()) - 1
+    command = "squeue -u quaesig |wc -l > nbProc.txt"
+    os.system(command)
+    runningJobs = 0
+    with open("nbProc.txt", "r") as f:
+        for l in f:
+            runningJobs = int(l.strip()) - 1
     return runningJobs
 
 
