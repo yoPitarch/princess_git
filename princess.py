@@ -222,6 +222,7 @@ def main():
             count = 0
             list_doc = []
             for i in list:
+                print i
                 for d in i['docs']:
                     # print "**********"
                     count += 1
