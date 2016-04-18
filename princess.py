@@ -1,6 +1,7 @@
 #! /usr/bin/python
 
 import getopt
+import math
 import os
 import sys
 import time
@@ -70,10 +71,10 @@ def evaluateQRels(c):
 def main():
     # Handle user options
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "dht:i:l:s:n:r:f:vc:b:g:am:o:p:",
+        opts, args = getopt.getopt(sys.argv[1:], "dht:i:l:s:n:r:f:vc:b:g:am:o:p:x:",
                                    ["debug", "help", "type=", "impact=", "life=", "strategy=", "nbFeats=", "rounds=",
                                     "featureList=", "verbose", 'collection=', 'group=', 'accepted', 'model=', 'optim',
-                                    'process'])
+                                    'process=', "cross="])
     except getopt.GetoptError as err:
         # print help information and exit:
         print str(err)  # will print something like "option -a not recognized"
@@ -90,7 +91,7 @@ def main():
     group = 1
     type_tournament = "robin"
     collection_name = 'trec_adhoc_lee'
-    output_directory = "../../result/"
+    output_directory = "/osirim/sig/PROJET/PRINCESS/results/princess/"
     impact = 0
     features_to_remove = []
     strategy = 1
@@ -100,6 +101,9 @@ def main():
     accepted = False
     verbose = False
     model = "f45"
+    fold = -1
+    step = "training"  # ou "test"
+    queriesToProcess = []
 
     strategy = ['f48', 'f17', 'f19', 'f16', 'f46', 'f9', 'f21', 'f3', 'f39', 'f7', 'f40', 'f6', 'f37', 'f42', 'f2',
                 'f15', 'f25', 'f33', 'f36', 'f10', 'f30', 'f51', 'f28', 'f43', 'f45', 'f34', 'f24', 'f13', 'f50', 'f27',
@@ -142,8 +146,22 @@ def main():
             nbFeats = int(a)
         elif o in ("-s", "--strategy"):
             strategy = int(a)
+        elif o in ("-x", "--cross"):
+            fold = int(a)
+            if fold < 0:
+                step = "training"
+            else:
+                step = "test"
+            fold = math.fabs(fold)
         else:
             assert False, "unhandled option"
+
+    # load appropriate queries for this run
+    if "web" in collection_name:
+        output_directory += "web2014/" + str(fold) + "/"
+        with open("/osirim/sig/PROJET/PRINCESS/queries/web2014/folds/" + str(fold) + ".txt", "r") as fq:
+            for l in fq:
+                queriesToProcess.append(l.strip())
 
     # One tournament per query
     connection = MongoClient(host='co2-ni01.irit.fr', port=28018)
@@ -155,6 +173,12 @@ def main():
         evaluateQRels(collection_name)
 
     outputFolderName = ''
+
+    if step == "training":
+        output_directory += "/training/"
+    else:
+        output_directory += "/test/"
+
 
     if len(features_to_remove) > 0:
         outputFolderName = 't:' + type_tournament + '-o:' + optim + '-r:' + str(nb_rounds) + '-b:' + str(
@@ -173,85 +197,107 @@ def main():
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
 
+    os.system("rm " + output_directory + "*")
+
     begin = time.time()
 
     for q in queries:
-        # print "Query "+q
-        dictQRels.setdefault(q, {})
-        list = collection.find({'query': q}, {'_id': 0, 'docs': 1})
-        count = 0
-        list_doc = []
-        for i in list:
-            for d in i['docs']:
-                # print "**********"
-                count += 1
-                name = d['doc_name']
-                # list_feat = []
-                list_feat = {}
-                for f in d['features']:
-                    # print f
-                    list_feat[f] = Feature(f, d['features'][f])
-                    # if float(d['features'][f]) > 1.0 :
-                    #	print f + " = "+ str(d['features'][f])
-                if model not in list_feat:
-                    list_feat[model] = Feature(model, 0.0)
-                list_doc.append(Document(name, list_feat))
-                # sys.exit()
 
-        colName = collection_name + "_std"
-        print colName
-        collection_std = db[colName]
-        listStd = {}
-        res = collection_std.find({'query': q}, {'_id': 0})
-        listStd = res[0]['stds']
+        processQuery = False
+        if step == "training":
+            if q in queriesToProcess:
+                processQuery = False
+            else:
+                processQuery = True
+        else:
+            if q in queriesToProcess:
+                processQuery = True
+            else:
+                processQuery = False
 
-        if type_tournament == "robin":
-            to = RoundRobin(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbRound=nb_rounds,
-                            featsToRemove=features_to_remove, qrel=dictQRels[q], accepted=accepted, optim=optim,
-                            listStd=listStd, process=process)
-        elif type_tournament == "return":
-            to = RoundRobinReturnMatch(query=q, impact=0, health=life, nbFeat=nbFeats, strategy=strategy,
-                                       nbRound=nb_rounds, featsToRemove=features_to_remove, accepted=accepted,
-                                       optim=optim, listStd=listStd)
-        elif type_tournament == "swiss":
-            to = SwissSystem(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbRound=nb_rounds,
-                             featsToRemove=features_to_remove, accepted=accepted, optim=optim, listStd=listStd,
-                             process=process)
-        elif type_tournament == "random":
-            to = RandomTournament(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy,
-                                  nbRound=nb_rounds, featsToRemove=features_to_remove, qrel=dictQRels[q],
-                                  accepted=accepted, optim=optim, listStd=listStd)
-        elif type_tournament == "grouprobin":
-            to = GroupStage(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbGroups=group,
-                            featsToRemove=features_to_remove, qrel=dictQRels[q], best=best, accepted=accepted,
-                            optim=optim, listStd=listStd)
-        elif type_tournament == "grouprobinoptim":
-            to = GroupStageOptim(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbGroups=group,
-                                 featsToRemove=features_to_remove, qrel=dictQRels[q], best=best, accepted=accepted,
-                                 model=model, optim=optim, listStd=listStd, process=process)
-        elif type_tournament == "groupswiss":
-            to = GroupSwiss(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbGroups=group,
-                            nbRound=nb_rounds, featsToRemove=features_to_remove, qrel=dictQRels[q], best=best,
-                            accepted=accepted, optim=optim, listStd=listStd, process=process)
-        elif type_tournament == "groupswissoptim":
-            to = GroupSwissOptim(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbGroups=group,
-                                 nbRound=nb_rounds, featsToRemove=features_to_remove, qrel=dictQRels[q], best=best,
-                                 accepted=accepted, model=model, optim=optim, listStd=listStd, process=process)
-        elif type_tournament == "seed":
-            to = Seed(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbRound=nb_rounds,
-                      featsToRemove=features_to_remove, qrel=dictQRels[q], accepted=accepted, model=model, optim=optim,
-                      listStd=listStd)
-        elif type_tournament == "upper":
-            to = Upper(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbRound=nb_rounds,
-                       featsToRemove=features_to_remove, qrel=dictQRels[q], accepted=accepted, model=model, optim=optim,
-                       listStd=listStd)
-        print "setCompetitors"
-        to.setCompetitors(list_doc)
-        print len(list_doc)
-        print "runCompetition"
-        to.runCompetition()
-        print "printResults"
-        to.printResults(output_directory)
+        if processQuery:
+            # print "Query "+q
+            dictQRels.setdefault(q, {})
+            list = collection.find({'query': q}, {'_id': 0, 'docs': 1})
+            count = 0
+            list_doc = []
+            for i in list:
+                for d in i['docs']:
+                    # print "**********"
+                    count += 1
+                    name = d['doc_name']
+                    # list_feat = []
+                    list_feat = {}
+                    for f in d['features']:
+                        # print f
+                        list_feat[f] = Feature(f, d['features'][f])
+                        # if float(d['features'][f]) > 1.0 :
+                        #	print f + " = "+ str(d['features'][f])
+                    if model not in list_feat:
+                        list_feat[model] = Feature(model, 0.0)
+                    list_doc.append(Document(name, list_feat))
+                    # sys.exit()
+
+            colName = collection_name + "_std"
+            print colName
+            collection_std = db[colName]
+            listStd = {}
+            res = collection_std.find({'query': q}, {'_id': 0})
+            listStd = res[0]['stds']
+
+            if type_tournament == "robin":
+                to = RoundRobin(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy,
+                                nbRound=nb_rounds,
+                                featsToRemove=features_to_remove, qrel=dictQRels[q], accepted=accepted, optim=optim,
+                                listStd=listStd, process=process)
+            elif type_tournament == "return":
+                to = RoundRobinReturnMatch(query=q, impact=0, health=life, nbFeat=nbFeats, strategy=strategy,
+                                           nbRound=nb_rounds, featsToRemove=features_to_remove, accepted=accepted,
+                                           optim=optim, listStd=listStd)
+            elif type_tournament == "swiss":
+                to = SwissSystem(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy,
+                                 nbRound=nb_rounds,
+                                 featsToRemove=features_to_remove, accepted=accepted, optim=optim, listStd=listStd,
+                                 process=process)
+            elif type_tournament == "random":
+                to = RandomTournament(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy,
+                                      nbRound=nb_rounds, featsToRemove=features_to_remove, qrel=dictQRels[q],
+                                      accepted=accepted, optim=optim, listStd=listStd)
+            elif type_tournament == "grouprobin":
+                to = GroupStage(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbGroups=group,
+                                featsToRemove=features_to_remove, qrel=dictQRels[q], best=best, accepted=accepted,
+                                optim=optim, listStd=listStd)
+            elif type_tournament == "grouprobinoptim":
+                to = GroupStageOptim(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy,
+                                     nbGroups=group,
+                                     featsToRemove=features_to_remove, qrel=dictQRels[q], best=best, accepted=accepted,
+                                     model=model, optim=optim, listStd=listStd, process=process)
+            elif type_tournament == "groupswiss":
+                to = GroupSwiss(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbGroups=group,
+                                nbRound=nb_rounds, featsToRemove=features_to_remove, qrel=dictQRels[q], best=best,
+                                accepted=accepted, optim=optim, listStd=listStd, process=process)
+            elif type_tournament == "groupswissoptim":
+                to = GroupSwissOptim(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy,
+                                     nbGroups=group,
+                                     nbRound=nb_rounds, featsToRemove=features_to_remove, qrel=dictQRels[q], best=best,
+                                     accepted=accepted, model=model, optim=optim, listStd=listStd, process=process)
+            elif type_tournament == "seed":
+                to = Seed(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbRound=nb_rounds,
+                          featsToRemove=features_to_remove, qrel=dictQRels[q], accepted=accepted, model=model,
+                          optim=optim,
+                          listStd=listStd)
+            elif type_tournament == "upper":
+                to = Upper(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy, nbRound=nb_rounds,
+                           featsToRemove=features_to_remove, qrel=dictQRels[q], accepted=accepted, model=model,
+                           optim=optim,
+                           listStd=listStd)
+            print "setCompetitors"
+            to.setCompetitors(list_doc)
+            print len(list_doc)
+            print "runCompetition"
+            to.runCompetition()
+            print "printResults"
+            to.printResults(output_directory)
 
     print "[ n=", process, type_tournament, "] total time:", (time.time() - begin), "ms"
 

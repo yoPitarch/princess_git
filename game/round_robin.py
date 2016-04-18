@@ -320,7 +320,7 @@ class  RoundRobin(Tournament):
         # 				nb += 1
         # 		print str(nb)+" irrelevant loosers"
 
-        file = open(path + "result_" + self.query + ".txt", "w")
+        file = open(path + "results.txt", "a")
         # print "=============================\n    RESULTS    \n============================="
         self._competitors = sorted(self._competitors, key=attrgetter('score'), reverse=True)
         counter = 1
