@@ -1,7 +1,6 @@
 #! /usr/bin/python
 
 import getopt
-import math
 import os
 import sys
 import time
@@ -147,12 +146,13 @@ def main():
         elif o in ("-s", "--strategy"):
             strategy = int(a)
         elif o in ("-x", "--cross"):
-            fold = int(a)
-            if fold < 0:
+            fold = a
+            if '-' in fold:
                 step = "training"
+                fold = int(-a)
             else:
                 step = "test"
-            fold = math.fabs(fold)
+
         else:
             assert False, "unhandled option"
 
