@@ -218,7 +218,8 @@ def main():
         if processQuery:
             # print "Query "+q
             dictQRels.setdefault(q, {})
-            list = collection.find({'query': q}, {'_id': 0, 'docs': 1})
+            qstr = '"' + q + '"'
+            list = collection.find({'query': qstr}, {'_id': 0, 'docs': 1})
             count = 0
             list_doc = []
             for i in list:
