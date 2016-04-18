@@ -243,6 +243,7 @@ def main():
             collection_std = db[colName]
             listStd = {}
             res = collection_std.find({'query': q}, {'_id': 0})
+            print res
             listStd = res[0]['stds']
 
             if type_tournament == "robin":
