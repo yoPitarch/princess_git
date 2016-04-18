@@ -187,9 +187,9 @@ os.system(dirname + "run.sh")
 interval = 10
 startTime = time.time()
 while get_running_jobs() > 0:
-    t = int((time.time() - startTime))
-    print t
-    if t % interval == 0:
+    t = time.time() - startTime
+    print int(t)
+    if int(t) % interval == 0:
         print "je checke"
         l = checkDoneXp()
         if len(l) > 0:
