@@ -242,7 +242,7 @@ def main():
             print colName
             collection_std = db[colName]
             listStd = {}
-            res = collection_std.find({'query': "'" + q + "'"}, {'_id': 0})
+            res = collection_std.find({'query': str(q)}, {'_id': 0})
             print colName
             print q
             print res
