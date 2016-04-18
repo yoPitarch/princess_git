@@ -189,7 +189,7 @@ startTime = time.time()
 while get_running_jobs() > 0:
     t = time.time() - startTime
     print int(t)
-    if int(t) % interval == 0:
+    if int(t) % interval >= 0 and int(t) % interval < 1:
         print "je checke"
         l = checkDoneXp()
         if len(l) > 0:
