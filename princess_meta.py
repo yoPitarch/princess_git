@@ -27,6 +27,7 @@ xpNb = len(listType) * len(listFeature) * len(listImpact) * len(listRound) * len
 def get_running_jobs():
     p = subprocess.Popen(['squeue', '-u', 'quaesig', '|', 'wc', '-l'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
+    print out
     runningJobs = int(out.strip()) - 1
     return runningJobs
 
