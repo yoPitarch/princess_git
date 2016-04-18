@@ -79,7 +79,7 @@ def generate_script():
                                                 else:
                                                     the_file.write(
                                                         'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess/princess.py -p 63 -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g 5 -n 0 -s ' + elStrategy + ' -a -f ' + elFeature + "\n")
-                                            script_file.write("sbatch " + sbatch_filename + "\n")
+                                            script_file.write("sbatch " + dirname + sbatch_filename + "\n")
 
     print count
 
