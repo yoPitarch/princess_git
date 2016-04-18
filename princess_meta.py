@@ -8,6 +8,18 @@ from os.path import join
 dirname = '/osirim/sig/PROJET/PRINCESS/code/script_experiments/'
 dirResult = '/osirim/sig/PROJET/PRINCESS/results/princess/'
 listFold = ["1", "2", "3", "4", "5"]
+
+# DEBUG
+listType = ['robin']
+listFeature = ['']
+listImpact = ['0', '1']
+listRound = ['10']
+listCollection = ['web2014clueweb12_adhoc_max50']
+listCollectionDir = ["web2014"]
+listLife = ['0', '10']
+listStrategy = ['0']
+
+'''
 listType = ['robin', 'grouprobin', 'swiss', 'groupswiss']
 listFeature = ['', ','.join(['f' + str(x) for x in range(3, 52, 3)]),
                ','.join(['f' + str(x) for x in range(28, 46)])]
@@ -17,6 +29,7 @@ listCollection = ['web2014clueweb12_adhoc_max50']
 listCollectionDir = ["web2014"]
 listLife = ['0', '2', '5', '7', '10', '20']
 listStrategy = ['0']
+'''
 regex = '^(map)\s+([\w\d]{3})(.*)'
 analyzedXp = []
 maps = {}
