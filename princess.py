@@ -245,7 +245,7 @@ def main():
             res = collection_std.find({'query': str(q)}, {'_id': 0})
             print colName
             print q
-            print res
+            print res[0]
             listStd = res[0]['stds']
 
             if type_tournament == "robin":
