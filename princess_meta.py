@@ -99,7 +99,7 @@ def generate_script():
 
 
 def checkDoneXp():
-    global dirResult
+
     def runOk(dirFold):
 
         listDirXp = os.listdir(dirFold)
@@ -113,10 +113,10 @@ def checkDoneXp():
 
     listCompleted = []
     for el in listCollectionDir:
-        dirResult = dirResult + el + "/"
+        dirResultRun = dirResult + el + "/"
         for fold in listFold:
-            dirResult += fold + "/training/"
-            if runOk(dirResult): listCompleted.append(dirResult)
+            dirResultRun += fold + "/training/"
+            if runOk(dirResultRun): listCompleted.append(dirResult)
 
 
     return listCompleted
