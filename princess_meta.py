@@ -74,11 +74,11 @@ def generate_script():
 
                                                 if elFeature == '':
                                                     the_file.write(
-                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess/princess_git.py -p 63 -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + \
+                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p 63 -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + \
                                                         ' -l ' + elLife + ' -i ' + elImpact + ' -g 5 -n 0 -s ' + elStrategy + "\n")
                                                 else:
                                                     the_file.write(
-                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess/princess_git.py -p 63 -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g 5 -n 0 -s ' + elStrategy + ' -a -f ' + elFeature + "\n")
+                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p 63 -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g 5 -n 0 -s ' + elStrategy + ' -a -f ' + elFeature + "\n")
 
                                             script_file.write("sbatch " + dirname + sbatch_filename + "\n")
                                         else:
@@ -89,10 +89,10 @@ def generate_script():
                                                     "#!/bin/sh\n#SBATCH --job-name=sigir\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=group.out\n#SBATCH --error=group.err\n#SBATCH -n 64 \n")
                                                 if elFeature == '':
                                                     the_file.write(
-                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess/princess_git.py -p 63  -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g 5 -n 0 -s ' + elStrategy + "\n")
+                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p 63  -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g 5 -n 0 -s ' + elStrategy + "\n")
                                                 else:
                                                     the_file.write(
-                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess/princess_git.py -p 63 -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g 5 -n 0 -s ' + elStrategy + ' -a -f ' + elFeature + "\n")
+                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p 63 -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g 5 -n 0 -s ' + elStrategy + ' -a -f ' + elFeature + "\n")
                                             script_file.write("sbatch " + dirname + sbatch_filename + "\n")
 
     print count
@@ -151,7 +151,8 @@ def extractMapXp(fold):
 def runTest(fold, best):
     idfold = fold.split("/")[-3]
     command = "srun --mail-type=ALL --mail-user=pitarch@irit.fr --ntasks=64 --output=best.out " \
-              "--error=best.err --job-name=best /logiciels/Python-2.7/bin/python2.7 -x " + idfold
+              "--error=best.err --job-name=best /logiciels/Python-2.7/bin/python2.7 " \
+              "/projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p 63 -x " + idfold
     t = best.split("-")
     for param in t:
         tparam = param.split(":")
