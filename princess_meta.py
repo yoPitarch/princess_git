@@ -181,9 +181,10 @@ os.system("scancel -u quaesig")
 os.system("chmod a+x " + dirname + "run.sh")
 os.system(dirname + "run.sh")
 
+interval = 60
 startTime = time.time()
 while get_running_jobs() > 0:
-    if time.time() - startTime % 7200 == 0:
+    if time.time() - startTime % interval == 0:
         print "je checke"
         l = checkDoneXp()
         if len(l) > 0:
