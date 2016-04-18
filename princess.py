@@ -149,7 +149,7 @@ def main():
             fold = a
             if '-' in fold:
                 step = "training"
-                fold = int(-a)
+                fold = -int(a)
             else:
                 step = "test"
 
