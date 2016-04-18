@@ -181,7 +181,7 @@ os.system("scancel -u quaesig")
 os.system("chmod a+x " + dirname + "run.sh")
 os.system(dirname + "run.sh")
 
-interval = 60
+interval = 10
 startTime = time.time()
 while get_running_jobs() > 0:
     if time.time() - startTime % interval == 0:
@@ -192,3 +192,4 @@ while get_running_jobs() > 0:
                 extractMapXp(fold)
                 best = findBestConfig(fold)
                 runTest(fold, best)
+    time.sleep(5)
