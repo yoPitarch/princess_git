@@ -43,6 +43,7 @@ def get_running_jobs():
     with open("nbProc.txt", "r") as f:
         for l in f:
             runningJobs = int(l.strip()) - 1
+            print "line: ", l, "/ jobs:", runningJobs
     return runningJobs
 
 
@@ -184,7 +185,7 @@ os.system(dirname + "run.sh")
 interval = 10
 startTime = time.time()
 while get_running_jobs() > 0:
-    if time.time() - startTime % interval == 0:
+    if (time.time() - startTime) % interval == 0:
         print "je checke"
         l = checkDoneXp()
         if len(l) > 0:
@@ -192,4 +193,4 @@ while get_running_jobs() > 0:
                 extractMapXp(fold)
                 best = findBestConfig(fold)
                 runTest(fold, best)
-    time.sleep(5)
+                # time.sleep()
