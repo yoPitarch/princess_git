@@ -37,7 +37,8 @@ listBest = ['0.1', '0.2', '0.5']
 regex = '^(map)\s+([\w\d]{3})(.*)'
 analyzedXp = []
 maps = {}
-xpNb = len(listType) * len(listFeature) * len(listImpact) * len(listRound) * len(listLife) * len(listStrategy)
+xpNb = len(listType) * len(listFeature) * len(listImpact) * len(listRound) * len(listLife) * len(listStrategy) * len(
+    listGroup) * len(listBest)
 
 
 def get_running_jobs():
