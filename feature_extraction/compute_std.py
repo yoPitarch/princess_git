@@ -16,7 +16,10 @@ tColName = ["indri_robust2004_", "indri_web2014clueweb12_adhoc_", "np2003", "np2
 connection = MongoClient(host='co2-ni01.irit.fr',port=28018)
 db = connection.princess
 for colName in tColName :
-    collection_name = colName + normType + maxRes
+    if "indri" in colName:
+        collection_name = colName + normType + maxRes
+    else:
+        collection_name = colName
     collection = db[collection_name]
     queries = collection.distinct('query')
     result_collection = db[collection_name + "_std"]
