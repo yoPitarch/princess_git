@@ -193,11 +193,13 @@ os.system(dirname + "run.sh")
 
 interval = 20
 startTime = time.time()
+isCheckDone = False
 while get_running_jobs() > 0:
     t = time.time() - startTime
     print int(t)
-    if t > 0 and int(t) % interval == 0:
+    if t > 0 and int(t) % interval == 0 and not isCheckDone:
         print "je checke"
+        isCheckDone = True
         l = checkDoneXp()
         if len(l) > 0:
             for fold in l:
@@ -205,3 +207,4 @@ while get_running_jobs() > 0:
                 best = findBestConfig(fold)
                 runTest(fold, best)
                 # time.sleep()
+    if int(t) % interval > 0: isCheckDone = False
