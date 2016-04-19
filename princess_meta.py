@@ -7,7 +7,7 @@ from os.path import join
 
 dirname = '/osirim/sig/PROJET/PRINCESS/code/script_experiments/'
 dirResult = '/osirim/sig/PROJET/PRINCESS/results/princess/'
-listFold = ["1", "2", "3", "4", "5"]
+
 
 # DEBUG
 '''
@@ -21,18 +21,21 @@ listLife = ['0', '10']
 listStrategy = ['0']
 '''
 nbProc = 20
-
+# listFold = ["1", "2", "3", "4", "5"]
+listFold = ["1", "2"]
 listType = ['robin', 'grouprobin', 'swiss', 'groupswiss']
 listFeature = ['', ','.join(['f' + str(x) for x in range(3, 52, 3)]),
                ','.join(['f' + str(x) for x in range(28, 46)])]
 listImpact = ['0', '1']
 listRound = ['10', '20', '30']
-listCollection = ['indri_web2014clueweb12_adhoc_max50', 'indri_robust2004_max50']
-listCollectionDir = ["web2014", 'robust2004']
-listLife = ['0', '2', '5', '7', '10', '20']
+# listCollection = ['indri_web2014clueweb12_adhoc_max50', 'indri_robust2004_max50']
+listCollection = ['indri_web2014clueweb12_adhoc_max50']
+# listCollectionDir = ["web2014", 'robust2004']
+listCollectionDir = ["web2014"]
+listLife = ['0', '2', '5', '10', '20']
 listStrategy = ['0']
-listGroup = ['2', '5', '10']
-listBest = ['0.1', '0.2', '0.5']
+listGroup = ['5', '10']
+listBest = ['0.1', '0.2']
 
 regex = '^(map)\s+([\w\d]{3})(.*)'
 analyzedXp = []
@@ -80,7 +83,10 @@ def generate_script():
                                                                       '-g:' + elGroup + '-s:' + elStrategy + '-a-f:' + elFeature + '.sh'
                                                     with open(dirname + '/' + sbatch_filename, 'w') as the_file:
                                                         the_file.write(
-                                                            "#!/bin/sh\n#SBATCH --job-name=sigir\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=group.out\n#SBATCH --error=group.err \n#SBATCH -n " + str(
+                                                            "#!/bin/sh\n#SBATCH --job-name=" + str(
+                                                                count) + "\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + str(
+                                                                count) + ".out\n#SBATCH --error=logs/" + str(
+                                                                count) + ".err \n#SBATCH -n " + str(
                                                                 nbProc + 1) + "\n ")
 
                                                         if elFeature == '':
@@ -99,7 +105,10 @@ def generate_script():
                                                     sbatch_filename = 'osirim_battle-t:' + elType + '-x:' + elFold + '-r:' + elRound + '-b:' + elBest + '-c:' + elCollection + '-l:' + elLife + '-i:' + elImpact + '-g:' + elGroup + '-s:' + elStrategy + '-a-f:' + elFeature + '.sh'
                                                     with open(dirname + '/' + sbatch_filename, 'w') as the_file:
                                                         the_file.write(
-                                                            "#!/bin/sh\n#SBATCH --job-name=sigir\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=group.out\n#SBATCH --error=group.err\n#SBATCH -n " + str(
+                                                            "#!/bin/sh\n#SBATCH --job-name=" + str(
+                                                                count) + "\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + str(
+                                                                count) + ".out\n#SBATCH --error=logs/" + str(
+                                                                count) + ".err\n#SBATCH -n " + str(
                                                                 nbProc + 1) + "\n")
                                                         if elFeature == '':
                                                             the_file.write(
@@ -175,7 +184,9 @@ def extractMapXp(fold):
 
 def runTest(fold, best):
     idfold = fold.split("/")[-3]
-    header = "#!/bin/sh\n#SBATCH --job-name=best\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=best.out\n#SBATCH --error=best.err \n#SBATCH -n " + str(
+    header = "#!/bin/sh\n#SBATCH --job-name=best" + str(len(
+        analyzedXp)) + "\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=best" + str(
+        len(analyzedXp)) + ".out\n#SBATCH --error=best" + str(len(analyzedXp)) + ".err \n#SBATCH -n " + str(
         nbProc + 1) + "\n "
     command = "/logiciels/Python-2.7/bin/python2.7 " \
               "/projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p " + str(nbProc) + " -x " + idfold
