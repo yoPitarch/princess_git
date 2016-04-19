@@ -194,11 +194,13 @@ def main():
     outputFolderName += '/'
     output_directory += outputFolderName
 
-    if not os.path.exists(output_directory):
-        os.makedirs(output_directory)
+    if os.path.exists(output_directory):
+        os.system("rm -r" + output_directory)
 
-    print "output directory", output_directory
-    os.system("rm " + output_directory + "*")
+    os.makedirs(output_directory)
+
+    # print "output directory", output_directory
+    # os.system("rm " + output_directory + "*")
 
     begin = time.time()
 
