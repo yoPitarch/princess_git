@@ -18,7 +18,7 @@ listCollection = ['indri_web2014clueweb12_adhoc_max50']
 listCollectionDir = ["web2014"]
 listLife = ['0', '10']
 listStrategy = ['0']
-
+nbProc = 20
 '''
 listType = ['robin', 'grouprobin', 'swiss', 'groupswiss']
 listFeature = ['', ','.join(['f' + str(x) for x in range(3, 52, 3)]),
@@ -70,15 +70,18 @@ def generate_script():
                                                               '-g:5-s:' + elStrategy + '-a-f:' + elFeature + '.sh'
                                             with open(dirname + '/' + sbatch_filename, 'w') as the_file:
                                                 the_file.write(
-                                                    "#!/bin/sh\n#SBATCH --job-name=sigir\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=group.out\n#SBATCH --error=group.err \n#SBATCH -n 64 \n ")
+                                                    "#!/bin/sh\n#SBATCH --job-name=sigir\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=group.out\n#SBATCH --error=group.err \n#SBATCH -n " + str(
+                                                        nbProc + 1) + "\n ")
 
                                                 if elFeature == '':
                                                     the_file.write(
-                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p 63 -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + \
+                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p  ' + str(
+                                                            nbProc) + ' -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + \
                                                         ' -l ' + elLife + ' -i ' + elImpact + ' -g 5 -n 0 -s ' + elStrategy + "\n")
                                                 else:
                                                     the_file.write(
-                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p 63 -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g 5 -n 0 -s ' + elStrategy + ' -a -f ' + elFeature + "\n")
+                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p  ' + str(
+                                                            nbProc) + ' -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g 5 -n 0 -s ' + elStrategy + ' -a -f ' + elFeature + "\n")
 
                                             script_file.write("sbatch " + dirname + sbatch_filename + "\n")
                                         else:
@@ -86,13 +89,16 @@ def generate_script():
                                             sbatch_filename = 'osirim_battle-t:' + elType + '-x:' + elFold + '-r:' + elRound + '-b:0.2-c:' + elCollection + '-l:' + elLife + '-i:' + elImpact + '-g:5-s:' + elStrategy + '-a-f:' + elFeature + '.sh'
                                             with open(dirname + '/' + sbatch_filename, 'w') as the_file:
                                                 the_file.write(
-                                                    "#!/bin/sh\n#SBATCH --job-name=sigir\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=group.out\n#SBATCH --error=group.err\n#SBATCH -n 64 \n")
+                                                    "#!/bin/sh\n#SBATCH --job-name=sigir\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=group.out\n#SBATCH --error=group.err\n#SBATCH -n " + str(
+                                                        nbProc + 1) + "\n")
                                                 if elFeature == '':
                                                     the_file.write(
-                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p 63  -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g 5 -n 0 -s ' + elStrategy + "\n")
+                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p  ' + str(
+                                                            nbProc) + ' -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g 5 -n 0 -s ' + elStrategy + "\n")
                                                 else:
                                                     the_file.write(
-                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p 63 -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g 5 -n 0 -s ' + elStrategy + ' -a -f ' + elFeature + "\n")
+                                                        'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p  ' + str(
+                                                            nbProc) + ' -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b 0.2 -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g 5 -n 0 -s ' + elStrategy + ' -a -f ' + elFeature + "\n")
                                             script_file.write("sbatch " + dirname + sbatch_filename + "\n")
 
     print count
@@ -185,7 +191,7 @@ os.system("scancel -u quaesig")
 os.system("chmod a+x " + dirname + "run.sh")
 os.system(dirname + "run.sh")
 
-interval = 10
+interval = 20
 startTime = time.time()
 while get_running_jobs() > 0:
     t = time.time() - startTime
