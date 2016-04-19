@@ -1,18 +1,19 @@
 # Programme permettant d'extraire les features d'une collection
 # Parametre : Fichier parametre
-import sys
+import ConfigParser
+import glob
+import math
 import os
 import re
-import glob
-import pymongo
-import ConfigParser
 import subprocess
+import sys
 import time
-import math
-import features
+
 import numpy as np
-import warc
-import bz2
+
+import features
+# import warc
+# import bz2
 
 from scipy import stats
 from pymongo import MongoClient

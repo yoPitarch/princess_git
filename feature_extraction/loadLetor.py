@@ -1,0 +1,55 @@
+import os
+from os.path import join
+
+from pymongo import MongoClient
+
+dirData = "/projets/sig/CORPUS/LETOR3.0/data"
+dirQueries = "/osirim/sig/PROJET/PRINCESS/queries"
+
+listdataset = os.listdir(dirData)
+
+for dataset in listdataset:
+    # ********************************************
+    # CONNEXION DANS MONGODB
+    # ********************************************
+    connection = MongoClient(host='co2-ni01.irit.fr', port=28018)
+    db = connection.princess
+    collection = db[dataset]
+    collection.remove({})
+
+    datasetLower = dataset.lower()
+    command = "rm -r " + dirQueries + "/" + datasetLower
+    os.system(command)
+    command = "mkdir " + dirQueries + "/" + datasetLower
+    os.system(command)
+    command = "mkdir " + dirQueries + "/" + datasetLower + "/folds"
+    os.system(command)
+
+    valFeats = {}
+
+    pathDataset = join(dirData, dataset)
+    listFold = os.listdir(pathDataset)
+    for fold in listFold:
+        idFold = fold.replace("Fold", "")
+        command = "cp " + pathDataset + "/" + fold + "/qids.txt " + dirQueries + "/" + datasetLower + "/" + idFold + ".txt"
+        os.system(command)
+
+        with open(pathDataset + "/" + fold + "/test.txt") as f:
+            for l in f:
+                t = l.split(' ')
+                qid = t[1].split(':')[1]
+                docid = t[-1].strip()
+                valFeats.setdefault(qid, {})
+                valFeats[qid].setdefault("query", qid)
+                valFeats[qid].setdefault("docs", [])
+                # valFeats[qid]["docs"] = []
+                dictDoc = {}
+                dictDoc["doc_name"] = docid
+                dictDoc["features"] = {}
+                for f in t[2:-3]:
+                    tf = f.split(':')
+                    dictDoc["features"][tf[0]] = float(tf[1])
+
+                valFeats[qid]["docs"].append(dictDoc)
+    for q in valFeats:
+        data = collection.save(valFeats[q])
