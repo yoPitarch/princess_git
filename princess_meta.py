@@ -118,6 +118,7 @@ def checkDoneXp():
             dirExpe = join(dirFold, dir)
             filesInExpe = os.listdir(dirExpe)
             if "completed.txt" not in filesInExpe: return False
+        print 'Fold completed!!'
         return True
 
     listCompleted = []
@@ -132,12 +133,16 @@ def checkDoneXp():
 
 
 def extractMapXp(fold):
+    print "[extractMapXp", fold, "]"
     maps[fold] = {}
     table = []
 
     for xp in os.listdir(fold):
+        print "\t xp:", xp
         outfilename = join(fold, xp) + "/results.txt"
         outfilenameeval = join(fold, xp) + "/results_trec.txt"
+        print "\t\t outfilename:", outfilename
+        print "\t\t outfilenameeval:", outfilenameeval
         if "web2014" in xp:
             table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", '-M50', "-q",
                      "/osirim/sig/PROJET/PRINCESS/qrels/web2014/qrels.all.web2014dedup.txt", '"' + outfilename + '"',
