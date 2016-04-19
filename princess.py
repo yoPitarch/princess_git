@@ -175,9 +175,9 @@ def main():
     outputFolderName = ''
 
     if step == "training":
-        output_directory += "/training/"
+        output_directory += "training/"
     else:
-        output_directory += "/test/"
+        output_directory += "test/"
 
 
     if len(features_to_remove) > 0:
@@ -224,7 +224,7 @@ def main():
             count = 0
             list_doc = []
             for i in list:
-                print i
+                # print i
                 for d in i['docs']:
                     # print "**********"
                     count += 1
@@ -246,9 +246,9 @@ def main():
             collection_std = db[colName]
             listStd = {}
             res = collection_std.find({'query': str(q)}, {'_id': 0})
-            print colName
-            print q
-            print res[0]
+            # print colName
+            # print q
+            #print res[0]
             listStd = res[0]['stds']
 
             if type_tournament == "robin":
