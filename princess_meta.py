@@ -180,7 +180,7 @@ def findBestConfig(fold):
     listResults = {}
     listResults = maps[fold]
     sorted_x = sorted(listResults.items(), key=operator.itemgetter(1), reverse=True)
-    best = sorted_x[0]
+    best = sorted_x[0][0]
     return best
 
 
