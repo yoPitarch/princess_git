@@ -195,7 +195,7 @@ def main():
     output_directory += outputFolderName
 
     if os.path.exists(output_directory):
-        os.system("rm -r" + output_directory)
+        os.system("rm -r " + output_directory)
 
     os.makedirs(output_directory)
 
