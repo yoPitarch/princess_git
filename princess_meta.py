@@ -165,14 +165,21 @@ def extractMapXp(fold):
 
 def runTest(fold, best):
     idfold = fold.split("/")[-3]
-    command = "srun --mail-type=ALL --mail-user=pitarch@irit.fr --ntasks=64 --output=best.out " \
-              "--error=best.err --job-name=best /logiciels/Python-2.7/bin/python2.7 " \
+    header = "#!/bin/sh\n#SBATCH --job-name=best\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=best.out\n#SBATCH --error=best.err \n#SBATCH -n " + str(
+        nbProc + 1) + "\n "
+    command = "/logiciels/Python-2.7/bin/python2.7 " \
               "/projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p 63 -x " + idfold
     t = best.split("-")
     for param in t:
         tparam = param.split(":")
         command += " " + tparam[0] + " " + tparam[1]
-    os.system(command)
+
+    print command
+    with open("scriptBest.sh", "w") as fout:
+        fout.write(header)
+        fout.write(command)
+
+    os.system("sbatch scriptBest.sh")
 
 
 
@@ -211,8 +218,10 @@ while get_running_jobs() > 0:
         l = checkDoneXp()
         if len(l) > 0:
             for fold in l:
-                extractMapXp(fold)
-                best = findBestConfig(fold)
-                runTest(fold, best)
+                if fold not in analyzedXp:
+                    extractMapXp(fold)
+                    best = findBestConfig(fold)
+                    runTest(fold, best)
+                    analyzedXp.append(fold)
                 # time.sleep()
     if int(t) % interval > 0: isCheckDone = False
