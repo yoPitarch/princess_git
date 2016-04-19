@@ -43,7 +43,7 @@ def get_running_jobs():
     with open("nbProc.txt", "r") as f:
         for l in f:
             runningJobs = int(l.strip()) - 1
-            print "line: ", l, "/ jobs:", runningJobs
+            # print "line: ", l, "/ jobs:", runningJobs
     return runningJobs
 
 
@@ -199,9 +199,9 @@ startTime = time.time()
 isCheckDone = False
 while get_running_jobs() > 0:
     t = time.time() - startTime
-    print int(t)
+    #print int(t)
     if t > 0 and int(t) % interval == 0 and not isCheckDone:
-        print "je checke"
+        print "[Start check procedure]"
         isCheckDone = True
         l = checkDoneXp()
         if len(l) > 0:
