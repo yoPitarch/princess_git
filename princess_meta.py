@@ -57,9 +57,9 @@ def generate_script():
 
     # nbExp = len(glob.glob('./Experiment*')) + 1
     # dirname = './osirim+sig/PROJET/PRINCESS/code/script_experiments/'
-    command = "rm " + dirname + "*"
-    command = "ls " + dirname + "* | xargs rm"
-    print command
+    command = "rm -r " + dirname
+    os.system(command)
+    command = "mkdir " + dirname
     os.system(command)
     print dirname
     # os.mkdir(dirname)
