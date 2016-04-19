@@ -102,6 +102,7 @@ def checkDoneXp():
 
     def runOk(dirFold):
 
+
         listDirXp = os.listdir(dirFold)
         if len(listDirXp) < xpNb: return False
 
@@ -113,9 +114,8 @@ def checkDoneXp():
 
     listCompleted = []
     for el in listCollectionDir:
-        dirResultRun = dirResult + el + "/"
         for fold in listFold:
-            dirResultRun += fold + "/training/"
+            dirResultRun = dirResult + el + "/" + fold + "/training/"
             if runOk(dirResultRun): listCompleted.append(dirResult)
 
 
