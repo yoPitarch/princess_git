@@ -30,26 +30,27 @@ for dataset in listdataset:
     pathDataset = join(dirData, dataset)
     listFold = os.listdir(pathDataset)
     for fold in listFold:
-        idFold = fold.replace("Fold", "")
-        command = "cp " + pathDataset + "/" + fold + "/qids.txt " + dirQueries + "/" + datasetLower + "/" + idFold + ".txt"
-        os.system(command)
+        if "Store" not in fold:
+            idFold = fold.replace("Fold", "")
+            command = "cp " + pathDataset + "/" + fold + "/qids.txt " + dirQueries + "/" + datasetLower + "/" + idFold + ".txt"
+            os.system(command)
 
-        with open(pathDataset + "/" + fold + "/test.txt") as f:
-            for l in f:
-                t = l.split(' ')
-                qid = t[1].split(':')[1]
-                docid = t[-1].strip()
-                valFeats.setdefault(qid, {})
-                valFeats[qid].setdefault("query", qid)
-                valFeats[qid].setdefault("docs", [])
-                # valFeats[qid]["docs"] = []
-                dictDoc = {}
-                dictDoc["doc_name"] = docid
-                dictDoc["features"] = {}
-                for f in t[2:-3]:
-                    tf = f.split(':')
-                    dictDoc["features"][tf[0]] = float(tf[1])
+            with open(pathDataset + "/" + fold + "/test.txt") as f:
+                for l in f:
+                    t = l.split(' ')
+                    qid = t[1].split(':')[1]
+                    docid = t[-1].strip()
+                    valFeats.setdefault(qid, {})
+                    valFeats[qid].setdefault("query", qid)
+                    valFeats[qid].setdefault("docs", [])
+                    # valFeats[qid]["docs"] = []
+                    dictDoc = {}
+                    dictDoc["doc_name"] = docid
+                    dictDoc["features"] = {}
+                    for f in t[2:-3]:
+                        tf = f.split(':')
+                        dictDoc["features"]["f" + tf[0]] = float(tf[1])
 
-                valFeats[qid]["docs"].append(dictDoc)
+                    valFeats[qid]["docs"].append(dictDoc)
     for q in valFeats:
         data = collection.save(valFeats[q])
