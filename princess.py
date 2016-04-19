@@ -162,6 +162,12 @@ def main():
         with open("/osirim/sig/PROJET/PRINCESS/queries/web2014/folds/" + str(fold) + ".txt", "r") as fq:
             for l in fq:
                 queriesToProcess.append(l.strip())
+    elif "robust" in collection_name:
+        output_directory += "robust2004/" + str(fold) + "/"
+        with open("/osirim/sig/PROJET/PRINCESS/queries/robust2004/folds/" + str(fold) + ".txt", "r") as fq:
+            for l in fq:
+                queriesToProcess.append(l.strip())
+
 
     # One tournament per query
     connection = MongoClient(host='co2-ni01.irit.fr', port=28018)
