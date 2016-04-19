@@ -126,7 +126,7 @@ def checkDoneXp():
         print "list dataset:", el
         for fold in listFold:
             dirResultRun = dirResult + el + "/" + fold + "/training/"
-            if runOk(dirResultRun): listCompleted.append(dirResult)
+            if runOk(dirResultRun): listCompleted.append(dirResultRun)
 
 
     return listCompleted
