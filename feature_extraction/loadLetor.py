@@ -12,12 +12,12 @@ for dataset in listdataset:
     # ********************************************
     # CONNEXION DANS MONGODB
     # ********************************************
+    datasetLower = dataset.lower()
     connection = MongoClient(host='co2-ni01.irit.fr', port=28018)
     db = connection.princess
-    collection = db[dataset]
+    collection = db[datasetLower]
     collection.remove({})
 
-    datasetLower = dataset.lower()
     command = "rm -r " + dirQueries + "/" + datasetLower
     os.system(command)
     command = "mkdir " + dirQueries + "/" + datasetLower
