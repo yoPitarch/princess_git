@@ -1,5 +1,6 @@
 #! /usr/bin/python
 
+import errno
 import getopt
 import os
 import sys
@@ -65,6 +66,15 @@ def evaluateQRels(c):
                     dictQRels[q] = {}
                 dictQRels[q][doc] = pertinent
                 # print dictQRels
+
+
+def secure_mkdir(path):
+    try:
+        os.makedirs(path)
+    except OSError as exception:
+        if exception.errno != errno.EEXIST:
+            raise
+
 
 
 def main():
@@ -203,10 +213,10 @@ def main():
     if os.path.exists(output_directory):
         os.system("rm -r " + output_directory)
 
-    os.makedirs(output_directory)
+    secure_mkdir(output_directory)
 
     # print "output directory", output_directory
-    # os.system("rm " + output_directory + "*")
+    os.system("rm " + output_directory + "*")
 
     begin = time.time()
 
