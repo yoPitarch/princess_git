@@ -107,10 +107,12 @@ def generate_script():
 def checkDoneXp():
 
     def runOk(dirFold):
-
-
+        print '\tChecking if ', dirFold, "is over...."
         listDirXp = os.listdir(dirFold)
-        if len(listDirXp) < xpNb: return False
+        print '\t\t nb expe:', len(listDirXp), ' vs nbRequired expe:', xpNb
+        if len(listDirXp) < xpNb:
+            print '\t\tNot enough....'
+            return False
 
         for dir in listDirXp:
             dirExpe = join(dirFold, dir)
@@ -120,6 +122,7 @@ def checkDoneXp():
 
     listCompleted = []
     for el in listCollectionDir:
+        print "list dataset:", el
         for fold in listFold:
             dirResultRun = dirResult + el + "/" + fold + "/training/"
             if runOk(dirResultRun): listCompleted.append(dirResult)
