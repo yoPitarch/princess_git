@@ -218,6 +218,8 @@ def main():
     # print "output directory", output_directory
     os.system("rm " + output_directory + "*")
 
+    print "Nb process", process
+
     begin = time.time()
 
     for q in queries:
