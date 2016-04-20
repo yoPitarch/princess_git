@@ -88,7 +88,7 @@ def generate_script():
                                                             "#!/bin/sh\n#SBATCH --job-name=" + str(
                                                                 count) + "\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + str(
                                                                 count) + ".out\n#SBATCH --error=logs/" + str(
-                                                                count) + ".err \n#SBATCH -n " + str(
+                                                                count) + ".err \n#SBATCH -c " + str(
                                                                 nbProc + 1) + "\n ")
 
                                                         if elFeature == '':
@@ -110,7 +110,7 @@ def generate_script():
                                                             "#!/bin/sh\n#SBATCH --job-name=" + str(
                                                                 count) + "\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + str(
                                                                 count) + ".out\n#SBATCH --error=logs/" + str(
-                                                                count) + ".err\n#SBATCH -n " + str(
+                                                                count) + ".err\n#SBATCH -c " + str(
                                                                 nbProc + 1) + "\n")
                                                         if elFeature == '':
                                                             the_file.write(
