@@ -114,16 +114,20 @@ class  SwissSystem(Tournament):
             self._competitors[self.dictDoc[doc["Name"]]].score = doc["Points"]
 
     def printResults(self, path):
-        file = open(path + "result_" + self.query + ".txt", "w")
+        file = open(path + "results.txt", "a")
         # print "=============================\n    RESULTS    \n============================="
         self._competitors = sorted(self._competitors, key=attrgetter('score'), reverse=True)
         counter = 1
         for current_doc in self._competitors:
+            '''
+            if current_doc.score>0:
+                file.write("{0} Q0 {1} {2} {3} {4}-princess\n".format(self.query,current_doc.name,counter,current_doc.score,self.query));
+                counter += 1
+            '''
             file.write(
                 "{0} Q0 {1} {2} {3} {4}-princess\n".format(self.query, current_doc.name, counter, current_doc.score,
                                                            self.query));
             counter += 1
-        #print current_doc
 
         file.close()
 

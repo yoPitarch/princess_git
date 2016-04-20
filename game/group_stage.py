@@ -1,8 +1,10 @@
 #! /usr/bin/python
-import getopt, sys, random
+import random
 from math import *
-from game import *
 from operator import attrgetter
+
+from game import *
+
 
 class  GroupStage(Tournament):  
 	''' ==========================================
@@ -173,21 +175,20 @@ class  GroupStage(Tournament):
 					#print c.features				
 		
 	def printResults(self,path):
-				
-		if len(self.qrel) > 0 :
-			print "=============================  "+self.query+"  ============================="
-			print "Victoire pertinent sur pertinent: "+str(self.stats[0])
-			print "Defaite pertinent sur non pertinent: "+str(self.stats[1])
-			print "Match nul: "+str(self.stats[2])
-
-		file = open(path+"result_"+self.query+".txt", "w")
-		#print "=============================\n    RESULTS    \n============================="
+		file = open(path + "results.txt", "a")
+		# print "=============================\n    RESULTS    \n============================="
 		self._competitors = sorted(self._competitors, key=attrgetter('score'), reverse=True)
 		counter = 1
 		for current_doc in self._competitors:
-			file.write("{0} Q0 {1} {2} {3} {4}-princess\n".format(self.query,current_doc.name,counter,current_doc.score,self.query));
+			'''
+            if current_doc.score>0:
+                file.write("{0} Q0 {1} {2} {3} {4}-princess\n".format(self.query,current_doc.name,counter,current_doc.score,self.query));
+                counter += 1
+            '''
+			file.write(
+				"{0} Q0 {1} {2} {3} {4}-princess\n".format(self.query, current_doc.name, counter, current_doc.score,
+														   self.query));
 			counter += 1
-		#print current_doc
 
 		file.close()
 
