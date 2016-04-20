@@ -235,7 +235,7 @@ def main():
                 processQuery = False
 
         if processQuery:
-            # print "Query "+q
+            print "Query " + q
             dictQRels.setdefault(q, {})
             qstr = str(q)
             list = collection.find({'query': qstr}, {'_id': 0, 'docs': 1})
