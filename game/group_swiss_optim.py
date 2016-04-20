@@ -1,8 +1,9 @@
 #! /usr/bin/python
-import getopt, sys, random
 from math import *
-from game import *
 from operator import attrgetter
+
+from game import *
+
 
 class  GroupSwissOptim(Tournament):  
 	''' ==========================================
@@ -13,8 +14,9 @@ class  GroupSwissOptim(Tournament):
     Description: 
     ==========================================
 	'''
-    
-	def __init__(self,query=None,impact=0,health=0,nbFeat=0,strategy=1,nbRound=10,featsToRemove=[],qrel={},nbGroups=4,best=0.1,accepted=False,model="f45",optim="order",listStd={}):
+
+	def __init__(self, query=None, impact=0, health=0, nbFeat=0, strategy=1, nbRound=10, featsToRemove=[], qrel={},
+				 nbGroups=4, best=0.1, accepted=False, model="f45", optim="order", listStd={}, process=100):
 		'''
         Constructor:
             - Set the number of round to 1
@@ -31,11 +33,16 @@ class  GroupSwissOptim(Tournament):
 		self.groups =[]
 		self.swisses =[]
 		self.model = model
+		self.process = process
 
 		for idX in range(self.nb_groups):
-			self.swisses.append(SwissSystem(query=query,impact=impact,health=health,nbFeat=nbFeat,strategy=strategy,nbRound=nbRound,featsToRemove=featsToRemove,optim=optim,listStd=self.listStd))
+			self.swisses.append(SwissSystem(query=query, impact=impact, health=health, nbFeat=nbFeat, strategy=strategy,
+											nbRound=nbRound, featsToRemove=featsToRemove, optim=optim,
+											listStd=self.listStd, process=self.process))
 
-		self.swisses.append(SwissSystem(query=query,impact=impact,health=health,nbFeat=nbFeat,strategy=strategy,nbRound=nbRound,featsToRemove=featsToRemove,optim=optim,listStd=self.listStd))
+		self.swisses.append(
+			SwissSystem(query=query, impact=impact, health=health, nbFeat=nbFeat, strategy=strategy, nbRound=nbRound,
+						featsToRemove=featsToRemove, optim=optim, listStd=self.listStd, process=self.process))
 
 
 
@@ -71,7 +78,7 @@ class  GroupSwissOptim(Tournament):
 			doc.score = 0
 
 	def _get_competitors(self):
-		return _competitors
+		return self._competitors
 
 	competitors = property(_get_competitors, _set_competitors) #Competitor description
     

@@ -23,7 +23,7 @@ listStrategy = ['0']
 nbProc = 20
 # listFold = ["1", "2", "3", "4", "5"]
 listFold = ["1", "2"]
-listType = ['robin', 'grouprobin', 'swiss', 'groupswiss']
+listType = ['robin', 'grouprobinoptim', 'swiss', 'groupswissoptim']
 listFeature = ['', ','.join(['f' + str(x) for x in range(3, 52, 3)]),
                ','.join(['f' + str(x) for x in range(28, 46)])]
 listImpact = ['0', '1']
