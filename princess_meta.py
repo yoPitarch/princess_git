@@ -43,6 +43,8 @@ maps = {}
 xpNb = len(listType) * len(listFeature) * len(listImpact) * len(listRound) * len(listLife) * len(listStrategy) * len(
     listGroup) * len(listBest)
 
+print "[Nb expe:", xpNb, "]"
+
 
 def get_running_jobs():
     command = "squeue -u quaesig |wc -l > nbProc.txt"
