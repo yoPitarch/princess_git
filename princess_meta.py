@@ -86,7 +86,7 @@ def generate_script():
                                                     with open(dirname + '/' + sbatch_filename, 'w') as the_file:
                                                         the_file.write(
                                                             "#!/bin/sh\n#SBATCH --job-name=" + str(
-                                                                count) + "\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + str(
+                                                                count) + "\n#SBATCH --mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + str(
                                                                 count) + ".out\n#SBATCH --error=logs/" + str(
                                                                 count) + ".err \n#SBATCH -c " + str(
                                                                 nbProc + 1) + "\n ")
@@ -108,7 +108,7 @@ def generate_script():
                                                     with open(dirname + '/' + sbatch_filename, 'w') as the_file:
                                                         the_file.write(
                                                             "#!/bin/sh\n#SBATCH --job-name=" + str(
-                                                                count) + "\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + str(
+                                                                count) + "\n#SBATCH --mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + str(
                                                                 count) + ".out\n#SBATCH --error=logs/" + str(
                                                                 count) + ".err\n#SBATCH -c " + str(
                                                                 nbProc + 1) + "\n")
@@ -194,7 +194,7 @@ def extractMapXp(fold):
 def runTest(fold, best):
     idfold = fold.split("/")[-3]
     header = "#!/bin/sh\n#SBATCH --job-name=best" + str(len(
-        analyzedXp)) + "\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=best" + str(
+        analyzedXp)) + "\n#SBATCH --mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=best" + str(
         len(analyzedXp)) + ".out\n#SBATCH --error=best" + str(len(analyzedXp)) + ".err \n#SBATCH -n " + str(
         nbProc + 1) + "\n "
     command = "/logiciels/Python-2.7/bin/python2.7 " \
