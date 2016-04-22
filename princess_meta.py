@@ -20,7 +20,7 @@ listCollectionDir = ["web2014"]
 listLife = ['0', '10']
 listStrategy = ['0']
 '''
-nbProc = 10
+nbProc = 20
 # listFold = ["1", "2", "3", "4", "5"]
 listFold = ["3", "4", "5"]
 listType = ['robin', 'grouprobinoptim', 'swiss', 'groupswissoptim']
@@ -258,3 +258,15 @@ while get_running_jobs() > 0:
                     analyzedXp.append(fold)
                 # time.sleep()
     if int(t) % interval > 0: isCheckDone = False
+
+l = checkDoneXp()
+if len(l) > 0:
+    print "Au moins une expé est finie !!!"
+    # sys.exit()
+    for fold in l:
+        if fold not in analyzedXp:
+            extractMapXp(fold)
+            best = findBestConfig(fold)
+            runTest(fold, best)
+            analyzedXp.append(fold)
+            # time.sleep()
