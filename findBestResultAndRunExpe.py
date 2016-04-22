@@ -175,7 +175,7 @@ def extractMapXp(fold):
             table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", "-M50", "-q",
                      "/osirim/sig/PROJET/PRINCESS/qrels/robust2004/qrels.robust2004.txt", '"' + outfilename + '"', ">",
                      '"' + outfilenameeval + '"']
-        # print " ".join(table)
+        print "command", " ".join(table)
         os.system(" ".join(table))
 
         with open(outfilenameeval, 'r') as myFile:
