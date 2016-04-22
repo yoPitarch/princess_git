@@ -184,7 +184,7 @@ def extractMapXp(fold):
                     for i in re.finditer(regex, line):
                         # feat = i.group(2)
                         maps[fold][xp] = float(i.group(3))
-    print maps
+                        # print maps
 
 
 def runTest(fold, best):
@@ -213,6 +213,7 @@ def findBestConfig(fold):
     listResults = maps[fold]
     sorted_x = sorted(listResults.items(), key=operator.itemgetter(1), reverse=True)
     best = sorted_x[0][0]
+    print sorted_x[0]
     return best
 
 
