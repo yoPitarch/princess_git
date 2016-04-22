@@ -164,8 +164,8 @@ def extractMapXp(fold):
         # print "\t xp:", xp
         outfilename = join(fold, xp) + "/results.txt"
         outfilenameeval = join(fold, xp) + "/results_trec.txt"
-        print "\t\t outfilename:", outfilename
-        print "\t\t outfilenameeval:", outfilenameeval
+        # print "\t\t outfilename:", outfilename
+        # print "\t\t outfilenameeval:", outfilenameeval
         if "web2014" in xp:
             table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", '-M50', "-q",
                      "/osirim/sig/PROJET/PRINCESS/qrels/web2014/qrels.all.web2014dedup.txt", '"' + outfilename + '"',
@@ -175,7 +175,7 @@ def extractMapXp(fold):
             table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", "-M50", "-q",
                      "/osirim/sig/PROJET/PRINCESS/qrels/robust2004/qrels.robust2004.txt", '"' + outfilename + '"', ">",
                      '"' + outfilenameeval + '"']
-        print "command", " ".join(table)
+        #print "command", " ".join(table)
         os.system(" ".join(table))
 
         with open(outfilenameeval, 'r') as myFile:
@@ -184,6 +184,7 @@ def extractMapXp(fold):
                     for i in re.finditer(regex, line):
                         # feat = i.group(2)
                         maps[fold][xp] = float(i.group(3))
+    print maps
 
 
 def runTest(fold, best):
