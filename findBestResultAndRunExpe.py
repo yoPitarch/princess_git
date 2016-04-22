@@ -2,7 +2,6 @@
 import operator
 import os
 import re
-import sys
 import time
 from os.path import join
 
@@ -222,7 +221,7 @@ l = checkDoneXp()
 
 if len(l) > 0:
     print "Au moins une expé est finie !!!"
-    sys.exit()
+    # sys.exit()
     for fold in l:
         if fold not in analyzedXp:
             extractMapXp(fold)
