@@ -20,9 +20,9 @@ listCollectionDir = ["web2014"]
 listLife = ['0', '10']
 listStrategy = ['0']
 '''
-nbProc = 20
+nbProc = 10
 # listFold = ["1", "2", "3", "4", "5"]
-listFold = ["1", "2"]
+listFold = ["3", "4", "5"]
 listType = ['robin', 'grouprobinoptim', 'swiss', 'groupswissoptim']
 listFeature = ['', ','.join(['f' + str(x) for x in range(3, 52, 3)]),
                ','.join(['f' + str(x) for x in range(28, 46)])]
