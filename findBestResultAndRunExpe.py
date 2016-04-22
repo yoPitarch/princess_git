@@ -164,19 +164,24 @@ def extractMapXp(fold):
         # print "\t xp:", xp
         outfilename = join(fold, xp) + "/results.txt"
         outfilenameeval = join(fold, xp) + "/results_trec.txt"
-        # print "\t\t outfilename:", outfilename
-        # print "\t\t outfilenameeval:", outfilenameeval
-        if "web2014" in xp:
-            table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", '-M50', "-q",
-                     "/osirim/sig/PROJET/PRINCESS/qrels/web2014/qrels.all.web2014dedup.txt", '"' + outfilename + '"',
-                     ">",
-                     '"' + outfilenameeval + '"']
-        elif "robust" in xp:
-            table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", "-M50", "-q",
-                     "/osirim/sig/PROJET/PRINCESS/qrels/robust2004/qrels.robust2004.txt", '"' + outfilename + '"', ">",
-                     '"' + outfilenameeval + '"']
-        #print "command", " ".join(table)
-        os.system(" ".join(table))
+
+        if not (os.path.exists(outfilenameeval)):
+
+            # print "\t\t outfilename:", outfilename
+            # print "\t\t outfilenameeval:", outfilenameeval
+            if "web2014" in xp:
+                table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", '-M50', "-q",
+                         "/osirim/sig/PROJET/PRINCESS/qrels/web2014/qrels.all.web2014dedup.txt",
+                         '"' + outfilename + '"',
+                         ">",
+                         '"' + outfilenameeval + '"']
+            elif "robust" in xp:
+                table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", "-M50", "-q",
+                         "/osirim/sig/PROJET/PRINCESS/qrels/robust2004/qrels.robust2004.txt", '"' + outfilename + '"',
+                         ">",
+                         '"' + outfilenameeval + '"']
+            # print "command", " ".join(table)
+            os.system(" ".join(table))
 
         with open(outfilenameeval, 'r') as myFile:
             for line in myFile:
@@ -198,7 +203,11 @@ def runTest(fold, best):
     t = best.split("-")
     for param in t:
         tparam = param.split(":")
-        command += " " + tparam[0] + " " + tparam[1]
+
+        if tparam[0] != "-a":
+            command += " " + tparam[0] + " " + tparam[1]
+        else:
+            command += " " + tparam[0]
 
     print command
     with open("scriptBest.sh", "w") as fout:
