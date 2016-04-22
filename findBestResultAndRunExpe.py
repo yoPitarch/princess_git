@@ -203,7 +203,7 @@ def runTest(fold, best):
     t = best.split("-")
     for param in t:
         tparam = param.split(":")
-
+        print tparam
         if tparam[0] != "-a":
             command += " " + tparam[0] + " " + tparam[1]
         else:
