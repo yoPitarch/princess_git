@@ -204,10 +204,10 @@ def runTest(fold, best):
     for param in t:
         tparam = param.split(":")
         print tparam
-        if tparam[0] != "-a":
-            command += " " + tparam[0] + " " + tparam[1]
+        if tparam[0] != "a":
+            command += " -" + tparam[0] + " " + tparam[1]
         else:
-            command += " " + tparam[0]
+            command += " -" + tparam[0]
 
     print command
     with open("scriptBest.sh", "w") as fout:
