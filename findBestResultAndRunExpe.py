@@ -132,6 +132,7 @@ def checkDoneXp():
         # print '\tChecking if ', dirFold, "is over...."
         if not os.path.exists(dirFold): return False
         listDirXp = os.listdir(dirFold)
+        print dirFold
         print '\t\t nb expe:', len(listDirXp), ' vs nbRequired expe:', xpNb
 
         if len(listDirXp) < xpNb:
