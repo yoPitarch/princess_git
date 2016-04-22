@@ -126,56 +126,61 @@ def generate_script():
 
 
 def checkDoneXp():
-
     def runOk(dirFold):
-        #print '\tChecking if ', dirFold, "is over...."
+        # print '\tChecking if ', dirFold, "is over...."
         if not os.path.exists(dirFold): return False
         listDirXp = os.listdir(dirFold)
-        #print '\t\t nb expe:', len(listDirXp), ' vs nbRequired expe:', xpNb
+        print dirFold
+        print '\t\t nb expe:', len(listDirXp), ' vs nbRequired expe:', xpNb
+
         if len(listDirXp) < xpNb:
-            #print '\t\tNot enough....'
+            # print '\t\tNot enough....'
             return False
 
         for dir in listDirXp:
             dirExpe = join(dirFold, dir)
             filesInExpe = os.listdir(dirExpe)
             if "completed.txt" not in filesInExpe: return False
-        #print 'Fold completed!!'
+        # print 'Fold completed!!'
         return True
 
     listCompleted = []
     for el in listCollectionDir:
-        #print "list dataset:", el
+        # print "list dataset:", el
         for fold in listFold:
             dirResultRun = dirResult + el + "/" + fold + "/training/"
             if runOk(dirResultRun): listCompleted.append(dirResultRun)
-
 
     return listCompleted
 
 
 def extractMapXp(fold):
-    #print "[extractMapXp", fold, "]"
+    # print "[extractMapXp", fold, "]"
     maps[fold] = {}
     table = []
 
     for xp in os.listdir(fold):
-        #print "\t xp:", xp
+        # print "\t xp:", xp
         outfilename = join(fold, xp) + "/results.txt"
         outfilenameeval = join(fold, xp) + "/results_trec.txt"
-        # print "\t\t outfilename:", outfilename
-        #print "\t\t outfilenameeval:", outfilenameeval
-        if "web2014" in xp:
-            table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", '-M50', "-q",
-                     "/osirim/sig/PROJET/PRINCESS/qrels/web2014/qrels.all.web2014dedup.txt", '"' + outfilename + '"',
-                     ">",
-                     '"' + outfilenameeval + '"']
-        elif "robust" in xp:
-            table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", "-M50", "-q",
-                     "/osirim/sig/PROJET/PRINCESS/qrels/robust2004/qrels.robust2004.txt", '"' + outfilename + '"', ">",
-                     '"' + outfilenameeval + '"']
-        # print " ".join(table)
-        os.system(" ".join(table))
+
+        if not (os.path.exists(outfilenameeval)):
+
+            # print "\t\t outfilename:", outfilename
+            # print "\t\t outfilenameeval:", outfilenameeval
+            if "web2014" in xp:
+                table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", '-M50', "-q",
+                         "/osirim/sig/PROJET/PRINCESS/qrels/web2014/qrels.all.web2014dedup.txt",
+                         '"' + outfilename + '"',
+                         ">",
+                         '"' + outfilenameeval + '"']
+            elif "robust" in xp:
+                table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", "-M50", "-q",
+                         "/osirim/sig/PROJET/PRINCESS/qrels/robust2004/qrels.robust2004.txt", '"' + outfilename + '"',
+                         ">",
+                         '"' + outfilenameeval + '"']
+            # print "command", " ".join(table)
+            os.system(" ".join(table))
 
         with open(outfilenameeval, 'r') as myFile:
             for line in myFile:
@@ -183,6 +188,7 @@ def extractMapXp(fold):
                     for i in re.finditer(regex, line):
                         # feat = i.group(2)
                         maps[fold][xp] = float(i.group(3))
+                        # print maps
 
 
 def runTest(fold, best):
@@ -196,9 +202,13 @@ def runTest(fold, best):
     t = best.split("-")
     for param in t:
         tparam = param.split(":")
-        command += " " + tparam[0] + " " + tparam[1]
+        print tparam
+        if tparam[0] != "a":
+            command += " -" + tparam[0] + " " + tparam[1]
+        else:
+            command += " -" + tparam[0]
 
-    print command
+    # print command
     with open("scriptBest.sh", "w") as fout:
         fout.write(header)
         fout.write(command)
@@ -206,14 +216,13 @@ def runTest(fold, best):
     os.system("sbatch scriptBest.sh")
 
 
-
 def findBestConfig(fold):
     listResults = {}
     listResults = maps[fold]
     sorted_x = sorted(listResults.items(), key=operator.itemgetter(1), reverse=True)
     best = sorted_x[0][0]
+    #print sorted_x[0]
     return best
-
 
 
 

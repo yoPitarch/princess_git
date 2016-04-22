@@ -209,7 +209,7 @@ def runTest(fold, best):
         else:
             command += " -" + tparam[0]
 
-    print command
+    # print command
     with open("scriptBest.sh", "w") as fout:
         fout.write(header)
         fout.write(command)
@@ -222,7 +222,7 @@ def findBestConfig(fold):
     listResults = maps[fold]
     sorted_x = sorted(listResults.items(), key=operator.itemgetter(1), reverse=True)
     best = sorted_x[0][0]
-    print sorted_x[0]
+    #print sorted_x[0]
     return best
 
 
