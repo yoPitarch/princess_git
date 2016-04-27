@@ -35,6 +35,7 @@ listCollection = ['indri_robust2004_max50']
 listCollectionDir = ['robust2004']
 # listCollectionDir = ["web2014"]
 
+
 listLife = ['0', '2', '5', '10', '20']
 listStrategy = ['0']
 listGroup = ['5', '10']
