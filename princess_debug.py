@@ -198,7 +198,7 @@ def main():
     # One tournament per query
     connection = MongoClient(host='co2-ni01.irit.fr', port=28018)
     db = connection.princess
-    collection = db[collection_name]
+    collection = db[collection_name.lower()]
     queries = collection.distinct('query')
 
     if debug:
