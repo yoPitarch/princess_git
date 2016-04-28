@@ -283,7 +283,7 @@ def main():
                         list_doc.append(Document(name, list_feat))
                         # sys.exit()
 
-            colName = collection_name + "_std"
+            colName = collection_name.lower() + "_std"
             print colName
             collection_std = db[colName]
             listStd = {}
