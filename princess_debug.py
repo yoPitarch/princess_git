@@ -243,6 +243,7 @@ def main():
         docsToCompete = []
         if "indri" not in collection_name:
             docsToCompete = loadDocsToCompete(collection_name, q)
+        print("docstoCompete:", docsToCompete)
 
         processQuery = False
         if step == "training":
