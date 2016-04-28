@@ -146,7 +146,7 @@ def main():
             group = int(a)
         elif o in ("-f", "--featureList"):
             features_to_remove = str(a).split(",")
-            print features_to_remove
+            # print features_to_remove
         elif o in ("-r", "--rounds"):
             nb_rounds = int(a)
         elif o in ("-m", "--model"):
@@ -240,10 +240,7 @@ def main():
 
     for q in queries:
 
-        docsToCompete = []
-        if "indri" not in collection_name:
-            docsToCompete = loadDocsToCompete(collection_name, q)
-        print("docstoCompete:", docsToCompete)
+        #print("docstoCompete:", docsToCompete)
 
         processQuery = False
         if step == "training":
@@ -259,6 +256,14 @@ def main():
 
         if processQuery:
             print "Query " + q
+
+            deb = time.time()
+
+            docsToCompete = []
+            if "indri" not in collection_name:
+                docsToCompete = loadDocsToCompete(collection_name, q)
+
+
             dictQRels.setdefault(q, {})
             qstr = str(q)
             list = collection.find({'query': qstr}, {'_id': 0, 'docs': 1})
@@ -284,7 +289,7 @@ def main():
                         # sys.exit()
 
             colName = collection_name.lower() + "_std"
-            print colName
+            #print colName
             collection_std = db[colName]
             listStd = {}
             res = collection_std.find({'query': str(q)}, {'_id': 0})
@@ -341,11 +346,13 @@ def main():
                            listStd=listStd)
             print "setCompetitors"
             to.setCompetitors(list_doc)
-            print len(list_doc)
+            #print len(list_doc)
             print "runCompetition"
             to.runCompetition()
             print "printResults"
             to.printResults(output_directory)
+
+            print "Query processing time:", (time.time() - deb), "sec"
 
     print "[ n=", process, type_tournament, "] total time:", (time.time() - begin), "ms"
     with open(output_directory + "completed.txt", "w") as f:
