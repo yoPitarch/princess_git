@@ -215,6 +215,7 @@ def runTest(fold, best, i):
         fout.write(header)
         fout.write(command + "\n")
 
+    os.system("chmod a+x scriptBest_" + str(i) + ".sh")
     os.system("./scriptBest_" + str(i) + ".sh")
 
 
