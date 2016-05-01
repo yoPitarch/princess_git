@@ -215,8 +215,12 @@ def runTest(fold, best, i):
         fout.write(header)
         fout.write(command + "\n")
 
-    os.system("chmod a+x scriptBest_" + str(i) + ".sh")
-    os.system("sbatch scriptBest_" + str(i) + ".sh")
+    with open("srunBest.sh", "a") as fout:
+        fout.write(command + "\n")
+
+
+        # os.system("chmod a+x scriptBest_" + str(i) + ".sh")
+        # os.system("sbatch scriptBest_" + str(i) + ".sh")
 
 
 def findBestConfig(fold):
@@ -232,6 +236,8 @@ startTime = time.time()
 
 l = checkDoneXp()
 
+os.system("rm srunBest.sh")
+
 if len(l) > 0:
     print "Au moins une expé est finie !!!"
     # sys.exit()
@@ -241,3 +247,6 @@ if len(l) > 0:
         runTest(fold, best, i)
         #analyzedXp.append(fold)
             # time.sleep()
+
+os.system("chmod a+x srunBest.sh")
+os.system('./srunBest.sh')
