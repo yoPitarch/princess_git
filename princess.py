@@ -76,6 +76,14 @@ def secure_mkdir(path):
             raise
 
 
+def loadDocsToCompete(c, q):
+    res = []
+    file = '/osirim/sig/PROJET/PRINCESS/code/tools/best_competitors_letor/' + c + '/docs/' + q + ".txt"
+    with open(file, "r") as f:
+        for l in f:
+            res.extend(l.split(' '))
+    return res
+
 
 def main():
     # Handle user options
@@ -136,7 +144,7 @@ def main():
             group = int(a)
         elif o in ("-f", "--featureList"):
             features_to_remove = str(a).split(",")
-            print features_to_remove
+            # print features_to_remove
         elif o in ("-r", "--rounds"):
             nb_rounds = int(a)
         elif o in ("-m", "--model"):
@@ -177,12 +185,18 @@ def main():
         with open("/osirim/sig/PROJET/PRINCESS/queries/robust2004/folds/" + str(fold) + ".txt", "r") as fq:
             for l in fq:
                 queriesToProcess.append(l.strip())
+    else:
+        output_directory += collection_name + "/" + str(fold) + "/"
+        with open("/osirim/sig/PROJET/PRINCESS/queries/" + collection_name.lower() + "/folds/" + str(fold) + ".txt",
+                  "r") as fq:
+            for l in fq:
+                queriesToProcess.append(l.strip())
 
 
     # One tournament per query
     connection = MongoClient(host='co2-ni01.irit.fr', port=28018)
     db = connection.princess
-    collection = db[collection_name]
+    collection = db[collection_name.lower()]
     queries = collection.distinct('query')
 
     if debug:
@@ -224,6 +238,8 @@ def main():
 
     for q in queries:
 
+        # print("docstoCompete:", docsToCompete)
+
         processQuery = False
         if step == "training":
             if q in queriesToProcess:
@@ -238,6 +254,14 @@ def main():
 
         if processQuery:
             print "Query " + q
+
+            deb = time.time()
+
+            docsToCompete = []
+            if "indri" not in collection_name:
+                docsToCompete = loadDocsToCompete(collection_name, q)
+
+
             dictQRels.setdefault(q, {})
             qstr = str(q)
             list = collection.find({'query': qstr}, {'_id': 0, 'docs': 1})
@@ -249,20 +273,21 @@ def main():
                     # print "**********"
                     count += 1
                     name = d['doc_name']
-                    # list_feat = []
-                    list_feat = {}
-                    for f in d['features']:
-                        # print f
-                        list_feat[f] = Feature(f, d['features'][f])
-                        # if float(d['features'][f]) > 1.0 :
-                        #	print f + " = "+ str(d['features'][f])
-                    if model not in list_feat:
-                        list_feat[model] = Feature(model, 0.0)
-                    list_doc.append(Document(name, list_feat))
-                    # sys.exit()
+                    if len(docsToCompete) == 0 or (len(docsToCompete) > 0 and name in docsToCompete):
+                        # list_feat = []
+                        list_feat = {}
+                        for f in d['features']:
+                            # print f
+                            list_feat[f] = Feature(f, d['features'][f])
+                            # if float(d['features'][f]) > 1.0 :
+                            #	print f + " = "+ str(d['features'][f])
+                        if model not in list_feat:
+                            list_feat[model] = Feature(model, 0.0)
+                        list_doc.append(Document(name, list_feat))
+                        # sys.exit()
 
-            colName = collection_name + "_std"
-            print colName
+            colName = collection_name.lower() + "_std"
+            #print colName
             collection_std = db[colName]
             listStd = {}
             res = collection_std.find({'query': str(q)}, {'_id': 0})
@@ -319,11 +344,13 @@ def main():
                            listStd=listStd)
             print "setCompetitors"
             to.setCompetitors(list_doc)
-            print len(list_doc)
+            #print len(list_doc)
             print "runCompetition"
             to.runCompetition()
             print "printResults"
             to.printResults(output_directory)
+
+            print "Query processing time:", (time.time() - deb), "sec"
 
     print "[ n=", process, type_tournament, "] total time:", (time.time() - begin), "ms"
     with open(output_directory + "completed.txt", "w") as f:
