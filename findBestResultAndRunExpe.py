@@ -216,7 +216,7 @@ def runTest(fold, best, i):
         fout.write(command + "\n")
 
     os.system("chmod a+x scriptBest_" + str(i) + ".sh")
-    os.system("./scriptBest_" + str(i) + ".sh")
+    os.system("sbatch scriptBest_" + str(i) + ".sh")
 
 
 def findBestConfig(fold):
