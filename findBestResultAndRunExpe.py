@@ -150,7 +150,8 @@ def checkDoneXp():
         # print "list dataset:", el
         for fold in listFold:
             dirResultRun = dirResult + el + "/" + fold + "/training/"
-            if runOk(dirResultRun): listCompleted.append(dirResultRun)
+            # if runOk(dirResultRun): listCompleted.append(dirResultRun)
+            listCompleted.append(dirResultRun)
 
     return listCompleted
 
@@ -192,13 +193,13 @@ def extractMapXp(fold):
                         # print maps
 
 
-def runTest(fold, best):
+def runTest(fold, best, i):
     idfold = fold.split("/")[-3]
     header = "#!/bin/sh\n#SBATCH --job-name=best" + str(len(
         analyzedXp)) + "\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=best" + str(
-        len(analyzedXp)) + ".out\n#SBATCH --error=best" + str(len(analyzedXp)) + ".err \n#SBATCH -n " + str(
+        len(analyzedXp)) + ".out\n#SBATCH --error=best" + str(len(analyzedXp)) + ".err \n#SBATCH -c " + str(
         nbProc + 1) + "\n "
-    command = "/logiciels/Python-2.7/bin/python2.7 " \
+    command = "srun /logiciels/Python-2.7/bin/python2.7 " \
               "/projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p " + str(nbProc) + " -x " + idfold
     t = best.split("-")
     for param in t:
@@ -210,11 +211,11 @@ def runTest(fold, best):
             command += " -" + tparam[0]
 
     # print command
-    with open("scriptBest.sh", "w") as fout:
+    with open("scriptBest_" + str(i) + ".sh", "w") as fout:
         fout.write(header)
-        fout.write(command)
+        fout.write(command + "\n")
 
-    os.system("sbatch scriptBest.sh")
+    os.system("scriptBest_" + str(i) + ".sh")
 
 
 def findBestConfig(fold):
@@ -233,10 +234,9 @@ l = checkDoneXp()
 if len(l) > 0:
     print "Au moins une expé est finie !!!"
     # sys.exit()
-    for fold in l:
-        if fold not in analyzedXp:
-            extractMapXp(fold)
-            best = findBestConfig(fold)
-            runTest(fold, best)
-            analyzedXp.append(fold)
+    for i, fold in enumerate(l):
+        extractMapXp(fold)
+        best = findBestConfig(fold)
+        runTest(fold, best, i)
+        #analyzedXp.append(fold)
             # time.sleep()
