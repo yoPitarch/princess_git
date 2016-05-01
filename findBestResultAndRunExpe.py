@@ -195,9 +195,9 @@ def extractMapXp(fold):
 
 def runTest(fold, best, i):
     idfold = fold.split("/")[-3]
-    header = "#!/bin/sh\n#SBATCH --job-name=best" + str(len(
-        analyzedXp)) + "\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=best" + str(
-        len(analyzedXp)) + ".out\n#SBATCH --error=best" + str(len(analyzedXp)) + ".err \n#SBATCH -c " + str(
+    header = "#!/bin/sh\n#SBATCH --job-name=best" + str(
+        i) + "\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=best" + str(
+        i) + ".out\n#SBATCH --error=best" + str(i) + ".err \n#SBATCH -c " + str(
         nbProc + 1) + "\n "
     command = "srun /logiciels/Python-2.7/bin/python2.7 " \
               "/projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p " + str(nbProc) + " -x " + idfold
@@ -215,7 +215,7 @@ def runTest(fold, best, i):
         fout.write(header)
         fout.write(command + "\n")
 
-    os.system("scriptBest_" + str(i) + ".sh")
+    os.system("./scriptBest_" + str(i) + ".sh")
 
 
 def findBestConfig(fold):
