@@ -17,7 +17,7 @@ class GroupSwissOptim(Tournament):
 
     def __init__(self, query=None, impact=0, health=0, nbFeat=0, strategy=1, nbRound=10, featsToRemove=[], qrel={},
                  nbGroups=4, best=0.1, accepted=False, model="f45", optim="order", listStd={}, process=100,
-                 boost="undifferentiated", alpha=3, topx=20):
+                 boost="undifferentiated", alpha=3, topx=20,listTop = []):
         '''
         Constructor:
             - Set the number of round to 1
@@ -39,17 +39,18 @@ class GroupSwissOptim(Tournament):
         self.boost = boost
         self.alpha = alpha
         self.topx = topx
+        self.lisTop = listTop
 
         for idX in range(self.nb_groups):
             self.swisses.append(SwissSystem(query=query, impact=impact, health=health, nbFeat=nbFeat, strategy=strategy,
                                             nbRound=nbRound, featsToRemove=featsToRemove, optim=optim,
                                             listStd=self.listStd, process=self.process, boost=self.boost,
-                                            alpha=self.alpha, topx=self.topx))
+                                            alpha=self.alpha, topx=self.topx, listTop=self.lisTop))
 
         self.swisses.append(
             SwissSystem(query=query, impact=impact, health=health, nbFeat=nbFeat, strategy=strategy, nbRound=nbRound,
                         featsToRemove=featsToRemove, optim=optim, listStd=self.listStd, process=self.process,
-                        boost=self.boost, alpha=self.alpha, topx=self.topx))
+                        boost=self.boost, alpha=self.alpha, topx=self.topx, listTop=self.lisTop))
 
     def schedule(self):
 

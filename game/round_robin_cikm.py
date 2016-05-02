@@ -20,7 +20,8 @@ class RoundRobin(Tournament):
     '''
 
     def __init__(self, query=None, impact=0, health=0, nbFeat=0, strategy=1, nbRound=10, featsToRemove=[], qrel={},
-                 accepted=False, optim="order", listStd={}, process=100, boost="undifferentiated", alpha=3, topx=20,model="f45"):
+                 accepted=False, optim="order", listStd={}, process=100, boost="undifferentiated", alpha=3,
+                 topx=20,model="f45",listTop = []):
         '''
         Constructor:
             - Set the number of round to 1
@@ -42,6 +43,7 @@ class RoundRobin(Tournament):
         self.model = model
         self.upperSet = []
         self.seedSet = set()
+        self.listTop = listTop
 
         # print self.qrel
 
@@ -149,12 +151,16 @@ class RoundRobin(Tournament):
                         (key, value) for key, value in c.features.iteritems() if key in self.featsToRemove)
                     # c.features = [x for x in c.features if x.name in self.featsToRemove]
 
-        self._competitors.sort(key=lambda x: x.features[self.model].value, reverse=True)
-        for c in self._competitors:
-            self.upperSet.append(c.name)
+        if len(self.listTop) == 0:
+            self._competitors.sort(key=lambda x: x.features[self.model].value, reverse=True)
+            for c in self._competitors:
+                self.upperSet.append(c.name)
 
-        for c in self._competitors[0:int(len(self._competitors) * (self.topx / 100))]:
-            self.seedSet.add(c.name)
+            for c in self._competitors[0:int(len(self._competitors) * (self.topx / 100))]:
+                self.seedSet.add(c.name)
+        else :
+            self.upperSet = self.listTop
+            self.seedSet = set(self.listTop[0:int(len(self.listTop) * (self.topx / 100))])
 
         for l in listCompetitors:
             self.mapping[l.name] = l

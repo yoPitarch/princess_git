@@ -317,12 +317,12 @@ def main():
                 to = RoundRobin(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy,
                                 nbRound=nb_rounds,
                                 featsToRemove=features_to_remove, qrel=dictQRels[q], accepted=accepted, optim=optim,
-                                listStd=listStd, process=process, boost=boost, alpha=alpha, topx=topx,model=model)
+                                listStd=listStd, process=process, boost=boost, alpha=alpha, topx=topx,model=model,listTop=docsToCompete)
             elif type_tournament == "swiss":
                 to = SwissSystem(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy,
                                  nbRound=nb_rounds,
                                  featsToRemove=features_to_remove, accepted=accepted, optim=optim, listStd=listStd,
-                                 process=process, boost=boost, alpha=alpha, topx=topx,model=model)
+                                 process=process, boost=boost, alpha=alpha, topx=topx,model=model,listTop=docsToCompete)
             elif type_tournament == "random":
                 to = RandomTournament(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy,
                                       nbRound=nb_rounds, featsToRemove=features_to_remove, qrel=dictQRels[q],
@@ -332,13 +332,13 @@ def main():
                                      nbGroups=group,
                                      featsToRemove=features_to_remove, qrel=dictQRels[q], best=best, accepted=accepted,
                                      model=model, optim=optim, listStd=listStd, process=process, boost=boost,
-                                     alpha=alpha, topx=topx)
+                                     alpha=alpha, topx=topx,listTop=docsToCompete)
             elif type_tournament == "groupswissoptim":
                 to = GroupSwissOptim(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy,
                                      nbGroups=group,
                                      nbRound=nb_rounds, featsToRemove=features_to_remove, qrel=dictQRels[q], best=best,
                                      accepted=accepted, model=model, optim=optim, listStd=listStd, process=process,
-                                     boost=boost, alpha=alpha, topx=topx)
+                                     boost=boost, alpha=alpha, topx=topx,listTop=docsToCompete)
 
             print "setCompetitors"
             to.setCompetitors(list_doc)
