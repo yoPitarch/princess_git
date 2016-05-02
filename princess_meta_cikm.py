@@ -82,9 +82,10 @@ def generate_script():
                     nbProc = 10
                 else:
                     nbProc = 1
-                for elFeature in listFeature:
+                for elCollection in listCollection:
+                    if "web" not in elCollection and "robust" not in elCollection:  listFeature = ['']
                     for elImpact in listImpact:
-                        for elCollection in listCollection:
+                        for elFeature in listFeature:
                             for elLife in listLife:
                                 for elStrategy in listStrategy:
                                     for elBoost in listBoost:
