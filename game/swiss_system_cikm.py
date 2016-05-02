@@ -23,7 +23,7 @@ class SwissSystem(Tournament):
     ========================================== """
 
     def __init__(self, query=None, impact=0, health=0, nbFeat=0, strategy=1, nbRound=10, featsToRemove=[],
-                 accepted=False, optim="order", listStd={}, process=100, boost="undifferentiated", alpha=3, topx=20):
+                 accepted=False, optim="order", listStd={}, process=100, boost="undifferentiated", alpha=3, topx=20,model="f45"):
         """
         Constructor:
             - Set the number of round to 1
@@ -41,6 +41,7 @@ class SwissSystem(Tournament):
         self.boost = boost
         self.alpha = alpha
         self.topx = topx
+        self.model = model
         self.upperSet = []
         self.seedSet = set()
         Tournament.__init__(self, query, impact, health, nbFeat, strategy, nbRound, featsToRemove, accepted, optim)

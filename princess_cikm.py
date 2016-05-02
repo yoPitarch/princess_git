@@ -317,12 +317,12 @@ def main():
                 to = RoundRobin(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy,
                                 nbRound=nb_rounds,
                                 featsToRemove=features_to_remove, qrel=dictQRels[q], accepted=accepted, optim=optim,
-                                listStd=listStd, process=process, boost=boost, alpha=alpha, topx=topx)
+                                listStd=listStd, process=process, boost=boost, alpha=alpha, topx=topx,model=model)
             elif type_tournament == "swiss":
                 to = SwissSystem(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy,
                                  nbRound=nb_rounds,
                                  featsToRemove=features_to_remove, accepted=accepted, optim=optim, listStd=listStd,
-                                 process=process, boost=boost, alpha=alpha, topx=topx)
+                                 process=process, boost=boost, alpha=alpha, topx=topx,model=model)
             elif type_tournament == "random":
                 to = RandomTournament(query=q, impact=impact, health=life, nbFeat=nbFeats, strategy=strategy,
                                       nbRound=nb_rounds, featsToRemove=features_to_remove, qrel=dictQRels[q],
