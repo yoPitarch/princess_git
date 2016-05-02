@@ -30,7 +30,8 @@ listFeature = ['', ','.join(['f' + str(x) for x in range(3, 52, 3)]),
 listImpact = ['0', '1']
 listRound = ['10', '20', '30']
 # listCollection = ['indri_web2014clueweb12_adhoc_max50', 'indri_robust2004_max50']
-listCollection = ["NP2003", "NP2004", "OHSUMED", "TD2003", "TD2004", "HP2003", "HP2004"]
+listCollection = ['indri_web2014clueweb12_adhoc_max50', 'indri_robust2004_max50', "NP2003", "NP2004", "OHSUMED",
+                  "TD2003", "TD2004", "HP2003", "HP2004"]
 # listCollection = ['indri_web2014clueweb12_adhoc_max50']
 # listCollectionDir = ["web2014", 'robust2004']
 listCollectionDir = ["web2014", 'robust2004', "NP2003", "NP2004", "OHSUMED", "TD2003", "TD2004", "HP2003", "HP2004"]
