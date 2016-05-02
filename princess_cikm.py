@@ -237,7 +237,7 @@ def main():
             best) + '-c:' + collection_name + '-i:' + str(impact) + '-l:' + str(life) + '-n:' + str(
             nbFeats) + '-s:' + str(strategy) + '-g:' + str(group)
 
-    outputFolderName += "-w:" + boost + "-y:" + alpha + "-z:" + topx
+    outputFolderName += "-w:" + boost + "-y:" + str(alpha) + "-z:" + str(topx)
 
     outputFolderName += '/'
     output_directory += outputFolderName
