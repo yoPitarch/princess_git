@@ -66,6 +66,7 @@ def get_running_jobs():
 def generate_script():
     count = 0
     global xpNb
+    global listFeature
 
     # nbExp = len(glob.glob('./Experiment*')) + 1
     # dirname = './osirim+sig/PROJET/PRINCESS/code/script_experiments/'
