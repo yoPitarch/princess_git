@@ -73,6 +73,7 @@ class GroupStageOptim(Tournament):
 
 
         for idGroup in range(self.nb_groups):
+            print "taille groupe:",len(self.groups[idGroup])
             for id_x in range(len(self.groups[idGroup])):
                 for id_y in range(id_x + 1, len(self.groups[idGroup])):
                     self.board[idGroup].append(
