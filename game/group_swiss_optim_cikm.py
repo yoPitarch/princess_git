@@ -40,6 +40,7 @@ class GroupSwissOptim(Tournament):
         self.alpha = alpha
         self.topx = topx
         self.lisTop = listTop
+        self.nbMatch = 0
 
         for idX in range(self.nb_groups):
             self.swisses.append(SwissSystem(query=query, impact=impact, health=health, nbFeat=nbFeat, strategy=strategy,
@@ -93,6 +94,7 @@ class GroupSwissOptim(Tournament):
         count = 1
         for idGroup in range(self.nb_groups):
             self.swisses[idGroup].runCompetition()
+            self.nbMatch += self.swisses[idGroup].nbMatch
             # print self._competitors
 
         # It's time to order the groups by score
@@ -105,6 +107,9 @@ class GroupSwissOptim(Tournament):
         # print "Size of finalist: "+str(len(finalist))
         self.swisses[self.nb_groups].setCompetitors(finalist)
         self.swisses[self.nb_groups].runCompetition()
+
+        self.nbMatch += self.swisses[self.nb_groups].nbMatch
+
 
     def setCompetitors(self, listCompetitors):
         self._competitors = listCompetitors
@@ -121,6 +126,7 @@ class GroupSwissOptim(Tournament):
 
     def printResults(self, path):
 
+        print 'NbMatch Final:',self.nbMatch
         file = open(path + "results.txt", "a")
         # print "=============================\n    RESULTS    \n============================="
         self._competitors = sorted(self._competitors, key=attrgetter('score'), reverse=True)
