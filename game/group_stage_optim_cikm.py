@@ -125,6 +125,10 @@ class GroupStageOptim(Tournament):
         out_q = multiprocessing.Queue()
 
         for idGroup in range(len(self.groups)):
+            print "nb match for group",idGroup,":",len(self.board[idGroup])
+
+
+        for idGroup in range(len(self.groups)):
             # print "Running robin in group "+str(idGroup+1)
             for id_match in range(len(self.board[idGroup])):
 
@@ -179,6 +183,7 @@ class GroupStageOptim(Tournament):
                     Match(finalist[id_x], finalist[id_y], impact=self.impact, health=self.health, nbFeat=self.nbFeat,
                           strategy=self.strategy, optim=self.optim))
 
+        print "nb match for final tournament:", len(self.board[self.nb_groups])
         for id_match in range(len(self.board[self.nb_groups])):
 
             if count != 0 and count % nb_process == 0:
