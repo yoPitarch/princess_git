@@ -44,6 +44,7 @@ class SwissSystem(Tournament):
         self.model = model
         self.listTop = listTop
         self.upperSet = []
+        self.nbMatch = 0
         self.seedSet = set()
         Tournament.__init__(self, query, impact, health, nbFeat, strategy, nbRound, featsToRemove, accepted, optim)
 
@@ -128,6 +129,7 @@ class SwissSystem(Tournament):
 
                     m = Match(self.mappingDoc[idPlayer1], self.mappingDoc[idPlayer2], impact=self.impact,
                               health=self.health, nbFeat=self.nbFeat, strategy=self.strategy, optim=self.optim)
+                    self.nbMatch += 1
                     jobs.append(multiprocessing.Process(target=self.runParallel, args=(table, m, out_q)))
                     count += 1
                     # self.tournament.reportMatch(table, m.run(self.listStd))
@@ -152,6 +154,9 @@ class SwissSystem(Tournament):
             self._competitors[self.dictDoc[doc["Name"]]].score = doc["Points"]
 
     def printResults(self, path):
+
+        print "nbMatch:",self.nbMatch
+
         file = open(path + "results.txt", "a")
         # print "=============================\n    RESULTS    \n============================="
         self._competitors = sorted(self._competitors, key=attrgetter('score'), reverse=True)
