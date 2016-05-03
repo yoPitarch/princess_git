@@ -2,6 +2,7 @@
 import operator
 import os
 import re
+import sys
 import time
 from os.path import join
 
@@ -157,7 +158,7 @@ def generate_script():
                                                         with open(dirname + '/' + sbatch_filename, 'w') as the_file:
                                                             the_file.write(
                                                                 "#!/bin/sh\n#SBATCH --job-name=" + elFold + "_" + str(
-                                                                    count) + "\n#SBATCH --mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
+                                                                    count) + "\n#SBATCH --nodelist=co2-nc01,co2-nc03,co2-nc04,co2-nc05,co2-nc06\n--mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
                                                                     count) + ".out\n#SBATCH --error=logs/" + elFold + "_" + str(
                                                                     count) + ".err \n#SBATCH -c " + str(
                                                                     nbProc + 1) + "\n ")
@@ -182,7 +183,7 @@ def generate_script():
                                                     with open(dirname + '/' + sbatch_filename, 'w') as the_file:
                                                         the_file.write(
                                                             "#!/bin/sh\n#SBATCH --job-name=" + elFold + "_" + str(
-                                                                count) + "\n#SBATCH --mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
+                                                                count) + "\n#SBATCH --nodelist=co2-nc01,co2-nc03,co2-nc04,co2-nc05,co2-nc06\n--mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
                                                                 count) + ".out\n#SBATCH --error=logs/" + elFold + "_" + str(
                                                                 count) + ".err \n#SBATCH -c " + str(
                                                                 nbProc + 1) + "\n ")
@@ -213,7 +214,7 @@ def generate_script():
                                                                               'w') as the_file:
                                                                         the_file.write(
                                                                             "#!/bin/sh\n#SBATCH --job-name=" + elFold + "_" + str(
-                                                                                count) + "\n#SBATCH --mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
+                                                                                count) + "\n#SBATCH --nodelist=co2-nc01,co2-nc03,co2-nc04,co2-nc05,co2-nc06\n--mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
                                                                                 count) + ".out\n#SBATCH --error=logs/" + elFold + "_" + str(
                                                                                 count) + ".err \n#SBATCH -c " + str(
                                                                                 nbProc + 1) + "\n ")
@@ -241,7 +242,7 @@ def generate_script():
                                                                           'w') as the_file:
                                                                     the_file.write(
                                                                         "#!/bin/sh\n#SBATCH --job-name=" + elFold + "_" + str(
-                                                                            count) + "\n#SBATCH --mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
+                                                                            count) + "\n#SBATCH --nodelist=co2-nc01,co2-nc03,co2-nc04,co2-nc05,co2-nc06\n--mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
                                                                             count) + ".out\n#SBATCH --error=logs/" + elFold + "_" + str(
                                                                             count) + ".err \n#SBATCH -c " + str(
                                                                             nbProc + 1) + "\n ")
@@ -269,7 +270,7 @@ def generate_script():
                                                             with open(dirname + '/' + sbatch_filename, 'w') as the_file:
                                                                 the_file.write(
                                                                     "#!/bin/sh\n#SBATCH --job-name=" + elFold + "_" + str(
-                                                                        count) + "\n#SBATCH --mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
+                                                                        count) + "\n#SBATCH --nodelist=co2-nc01,co2-nc03,co2-nc04,co2-nc05,co2-nc06\n--mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
                                                                         count) + ".out\n#SBATCH --error=logs/" + elFold + "_" + str(
                                                                         count) + ".err \n#SBATCH -c " + str(
                                                                         nbProc + 1) + "\n ")
@@ -296,7 +297,7 @@ def generate_script():
                                                         with open(dirname + '/' + sbatch_filename, 'w') as the_file:
                                                             the_file.write(
                                                                 "#!/bin/sh\n#SBATCH --job-name=" + elFold + "_" + str(
-                                                                    count) + "\n#SBATCH --mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
+                                                                    count) + "\n#SBATCH --nodelist=co2-nc01,co2-nc03,co2-nc04,co2-nc05,co2-nc06\n--mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
                                                                     count) + ".out\n#SBATCH --error=logs/" + elFold + "_" + str(
                                                                     count) + ".err \n#SBATCH -c " + str(
                                                                     nbProc + 1) + "\n ")
@@ -330,7 +331,7 @@ def generate_script():
                                                                                   'w') as the_file:
                                                                             the_file.write(
                                                                                 "#!/bin/sh\n#SBATCH --job-name=" + elFold + "_" + str(
-                                                                                    count) + "\n#SBATCH --mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
+                                                                                    count) + "\n#SBATCH --nodelist=co2-nc01,co2-nc03,co2-nc04,co2-nc05,co2-nc06\n--mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
                                                                                     count) + ".out\n#SBATCH --error=logs/" + elFold + "_" + str(
                                                                                     count) + ".err \n#SBATCH -c " + str(
                                                                                     nbProc + 1) + "\n ")
@@ -358,7 +359,7 @@ def generate_script():
                                                                               'w') as the_file:
                                                                         the_file.write(
                                                                             "#!/bin/sh\n#SBATCH --job-name=" + elFold + "_" + str(
-                                                                                count) + "\n#SBATCH --mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
+                                                                                count) + "\n#SBATCH --nodelist=co2-nc01,co2-nc03,co2-nc04,co2-nc05,co2-nc06\n--mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
                                                                                 count) + ".out\n#SBATCH --error=logs/" + elFold + "_" + str(
                                                                                 count) + ".err \n#SBATCH -c " + str(
                                                                                 nbProc + 1) + "\n ")
@@ -387,7 +388,7 @@ def generate_script():
                                                                           'w') as the_file:
                                                                     the_file.write(
                                                                         "#!/bin/sh\n#SBATCH --job-name=" + elFold + "_" + str(
-                                                                            count) + "\n#SBATCH --mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
+                                                                            count) + "\n#SBATCH --nodelist=co2-nc01,co2-nc03,co2-nc04,co2-nc05,co2-nc06\n--mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
                                                                             count) + ".out\n#SBATCH --error=logs/" + elFold + "_" + str(
                                                                             count) + ".err \n#SBATCH -c " + str(
                                                                             nbProc + 1) + "\n ")
@@ -414,7 +415,7 @@ def generate_script():
                                                             with open(dirname + '/' + sbatch_filename, 'w') as the_file:
                                                                 the_file.write(
                                                                     "#!/bin/sh\n#SBATCH --job-name=" + elFold + "_" + str(
-                                                                        count) + "\n#SBATCH --mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
+                                                                        count) + "\n#SBATCH --nodelist=co2-nc01,co2-nc03,co2-nc04,co2-nc05,co2-nc06\n--mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + elFold + "_" + str(
                                                                         count) + ".out\n#SBATCH --error=logs/" + elFold + "_" + str(
                                                                         count) + ".err \n#SBATCH -c " + str(
                                                                         nbProc + 1) + "\n ")
@@ -545,6 +546,7 @@ generate_script()
 # Script execution
 os.system("scancel -u quaesig")
 os.system("chmod a+x " + dirname + "run.sh")
+sys.exit()
 os.system(dirname + "run.sh")
 
 interval = 1000
