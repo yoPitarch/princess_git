@@ -94,6 +94,7 @@ class GroupSwissOptim(Tournament):
         count = 1
         for idGroup in range(self.nb_groups):
             self.swisses[idGroup].runCompetition()
+            print "group",idGroup,": ",self.swisses[idGroup].nbMatch
             self.nbMatch += self.swisses[idGroup].nbMatch
             # print self._competitors
 
@@ -109,6 +110,8 @@ class GroupSwissOptim(Tournament):
         self.swisses[self.nb_groups].runCompetition()
 
         self.nbMatch += self.swisses[self.nb_groups].nbMatch
+
+        print "group final:", self.swisses[self.nb_groups].nbMatch
 
 
     def setCompetitors(self, listCompetitors):
