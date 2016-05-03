@@ -41,7 +41,7 @@ listCollectionDir = ["web2014", 'robust2004', "NP2003", "NP2004", "OHSUMED", "TD
 
 listLife = ['0', '2', '5', '10', '20']
 listStrategy = ['0']
-listGroup = ['5', '10']
+listGroup = ['5','2']
 listBest = ['0.1', '0.2']
 listBoost = ["undifferentiated", "upper", "seed"]
 listAlpha = ['3', '5']

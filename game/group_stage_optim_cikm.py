@@ -44,6 +44,7 @@ class GroupStageOptim(Tournament):
         self.listTop = listTop
         self.upperSet = []
         self.seedSet = set()
+        self.nbMatch = 0
 
         for idX in range(self.nb_groups):
             self.board.append(list())
@@ -134,6 +135,7 @@ class GroupStageOptim(Tournament):
                         l = out_q.get()
                         self.mapping[l[0][0]].score += l[0][1]
                         self.mapping[l[1][0]].score += l[1][1]
+                        self.nbMatch += 1
 
                     jobs = []
                     out_q = multiprocessing.Queue()
@@ -149,6 +151,7 @@ class GroupStageOptim(Tournament):
             l = out_q.get()
             self.mapping[l[0][0]].score += l[0][1]
             self.mapping[l[1][0]].score += l[1][1]
+            self.nbMatch += 1
 
             # current_match.doc_a.opponents.append(current_match.doc_b.name)
             # current_match.doc_b.opponents.append(current_match.doc_a.name)
@@ -185,6 +188,7 @@ class GroupStageOptim(Tournament):
                     l = out_q.get()
                     self.mapping[l[0][0]].score += l[0][1]
                     self.mapping[l[1][0]].score += l[1][1]
+                    self.nbMatch += 1
 
                 jobs = []
                 out_q = multiprocessing.Queue()
@@ -236,6 +240,7 @@ class GroupStageOptim(Tournament):
             l = out_q.get()
             self.mapping[l[0][0]].score += l[0][1]
             self.mapping[l[1][0]].score += l[1][1]
+            self.nbMatch += 1
 
     def setCompetitors(self, listCompetitors):
 
@@ -266,7 +271,7 @@ class GroupStageOptim(Tournament):
             self.mapping[l.name] = l
 
     def printResults(self, path):
-
+        print "Nb matchs:",self.nbMatch
         file = open(path + "results.txt", "a")
         # print "=============================\n    RESULTS    \n============================="
         self._competitors = sorted(self._competitors, key=attrgetter('score'), reverse=True)
