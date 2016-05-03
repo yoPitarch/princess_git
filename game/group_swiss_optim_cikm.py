@@ -94,7 +94,7 @@ class GroupSwissOptim(Tournament):
         count = 1
         for idGroup in range(self.nb_groups):
             self.swisses[idGroup].runCompetition()
-            print "group",idGroup,": ",self.swisses[idGroup].nbMatch
+            #print "group",idGroup,": ",self.swisses[idGroup].nbMatch
             self.nbMatch += self.swisses[idGroup].nbMatch
             # print self._competitors
 
@@ -111,7 +111,7 @@ class GroupSwissOptim(Tournament):
 
         self.nbMatch += self.swisses[self.nb_groups].nbMatch
 
-        print "group final:", self.swisses[self.nb_groups].nbMatch
+        #print "group final:", self.swisses[self.nb_groups].nbMatch
 
 
     def setCompetitors(self, listCompetitors):
@@ -129,7 +129,7 @@ class GroupSwissOptim(Tournament):
 
     def printResults(self, path):
 
-        print 'NbMatch Final:',self.nbMatch
+        #print 'NbMatch Final:',self.nbMatch
         file = open(path + "results.txt", "a")
         # print "=============================\n    RESULTS    \n============================="
         self._competitors = sorted(self._competitors, key=attrgetter('score'), reverse=True)

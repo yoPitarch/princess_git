@@ -73,7 +73,7 @@ class GroupStageOptim(Tournament):
 
 
         for idGroup in range(self.nb_groups):
-            print "taille groupe:",len(self.groups[idGroup])
+            #print "taille groupe:",len(self.groups[idGroup])
             for id_x in range(len(self.groups[idGroup])):
                 for id_y in range(id_x + 1, len(self.groups[idGroup])):
                     self.board[idGroup].append(
@@ -125,8 +125,8 @@ class GroupStageOptim(Tournament):
         jobs = []
         out_q = multiprocessing.Queue()
 
-        for idGroup in range(len(self.groups)):
-            print "nb match for group",idGroup,":",len(self.board[idGroup])
+        #for idGroup in range(len(self.groups)):
+            #print "nb match for group",idGroup,":",len(self.board[idGroup])
 
 
         for idGroup in range(len(self.groups)):
@@ -184,7 +184,7 @@ class GroupStageOptim(Tournament):
                     Match(finalist[id_x], finalist[id_y], impact=self.impact, health=self.health, nbFeat=self.nbFeat,
                           strategy=self.strategy, optim=self.optim))
 
-        print "nb match for final tournament:", len(self.board[self.nb_groups])
+        #print "nb match for final tournament:", len(self.board[self.nb_groups])
         for id_match in range(len(self.board[self.nb_groups])):
 
             if count != 0 and count % nb_process == 0:
@@ -277,7 +277,7 @@ class GroupStageOptim(Tournament):
             self.mapping[l.name] = l
 
     def printResults(self, path):
-        print "Nb matchs:",self.nbMatch
+        #print "Nb matchs:",self.nbMatch
         file = open(path + "results.txt", "a")
         # print "=============================\n    RESULTS    \n============================="
         self._competitors = sorted(self._competitors, key=attrgetter('score'), reverse=True)

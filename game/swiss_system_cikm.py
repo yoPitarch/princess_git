@@ -155,7 +155,7 @@ class SwissSystem(Tournament):
 
     def printResults(self, path):
 
-        print "nbMatch:",self.nbMatch
+        #print "nbMatch:",self.nbMatch
 
         file = open(path + "results.txt", "a")
         # print "=============================\n    RESULTS    \n============================="
