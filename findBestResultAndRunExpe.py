@@ -6,7 +6,7 @@ import time
 from os.path import join
 
 dirname = '/osirim/sig/PROJET/PRINCESS/code/script_experiments/'
-dirResult = '/osirim/sig/PROJET/PRINCESS/results/princess/'
+dirResult = '/osirim/sig/PROJET/PRINCESS/results_cikm/princess/'
 
 # DEBUG
 '''
@@ -27,9 +27,10 @@ listFeature = ['', ','.join(['f' + str(x) for x in range(3, 52, 3)]),
                ','.join(['f' + str(x) for x in range(28, 46)])]
 listImpact = ['0', '1']
 listRound = ['10', '20', '30']
-listCollection = ['indri_web2014clueweb12_adhoc_max50', 'indri_robust2004_max50']
+listCollection = ['indri_web2014clueweb12_adhoc_max50', 'indri_robust2004_max50',"NP2003", "NP2004", "OHSUMED",
+                  "TD2003", "TD2004", "HP2003", "HP2004"]
 # listCollection = ['indri_web2014clueweb12_adhoc_max50']
-listCollectionDir = ["web2014", 'robust2004']
+listCollectionDir = ["web2014", 'robust2004', "NP2003", "NP2004", "OHSUMED", "TD2003", "TD2004", "HP2003", "HP2004"]
 #listCollectionDir = ["web2014"]
 listLife = ['0', '2', '5', '10', '20']
 listStrategy = ['0']
@@ -56,83 +57,13 @@ def get_running_jobs():
     return runningJobs
 
 
-'''
-def generate_script():
-    count = 0
-
-    # nbExp = len(glob.glob('./Experiment*')) + 1
-    # dirname = './osirim+sig/PROJET/PRINCESS/code/script_experiments/'
-    command = "rm -r " + dirname
-    os.system(command)
-    command = "mkdir " + dirname
-    os.system(command)
-    print dirname
-    # os.mkdir(dirname)
-    with open(dirname + '/run.sh', 'w') as script_file:
-        for elFold in listFold:
-            for elGroup in listGroup:
-                for elBest in listBest:
-                    for elType in listType:
-                        for elFeature in listFeature:
-                            for elImpact in listImpact:
-                                for elRound in listRound:
-                                    for elCollection in listCollection:
-                                        for elLife in listLife:
-                                            for elStrategy in listStrategy:
-                                                if "group" in elType:
-                                                    count += 1
-                                                    sbatch_filename = 'osirim_battle-t:' + elType + '-x:' + elFold + '-r:' + elRound + '-b:' + elBest + '-c:' + elCollection + '-l:' + elLife + '-i:' + elImpact + \
-                                                                      '-g:' + elGroup + '-s:' + elStrategy + '-a-f:' + elFeature + '.sh'
-                                                    with open(dirname + '/' + sbatch_filename, 'w') as the_file:
-                                                        the_file.write(
-                                                            "#!/bin/sh\n#SBATCH --job-name=" + str(
-                                                                count) + "\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + str(
-                                                                count) + ".out\n#SBATCH --error=logs/" + str(
-                                                                count) + ".err \n#SBATCH -c " + str(
-                                                                nbProc + 1) + "\n ")
-
-                                                        if elFeature == '':
-                                                            the_file.write(
-                                                                'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p  ' + str(
-                                                                    nbProc) + ' -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b ' + elBest + ' -c ' + elCollection + \
-                                                                ' -l ' + elLife + ' -i ' + elImpact + ' -g ' + elGroup + ' -n 0 -s ' + elStrategy + "\n")
-                                                        else:
-                                                            the_file.write(
-                                                                'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p  ' + str(
-                                                                    nbProc) + ' -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b ' + elBest + ' -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g ' + elGroup + ' -n 0 -s ' + elStrategy + ' -a -f ' + elFeature + "\n")
-
-                                                    script_file.write("sbatch " + dirname + sbatch_filename + "\n")
-                                                else:
-                                                    count += 1
-                                                    sbatch_filename = 'osirim_battle-t:' + elType + '-x:' + elFold + '-r:' + elRound + '-b:' + elBest + '-c:' + elCollection + '-l:' + elLife + '-i:' + elImpact + '-g:' + elGroup + '-s:' + elStrategy + '-a-f:' + elFeature + '.sh'
-                                                    with open(dirname + '/' + sbatch_filename, 'w') as the_file:
-                                                        the_file.write(
-                                                            "#!/bin/sh\n#SBATCH --job-name=" + str(
-                                                                count) + "\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=logs/" + str(
-                                                                count) + ".out\n#SBATCH --error=logs/" + str(
-                                                                count) + ".err\n#SBATCH -c " + str(
-                                                                nbProc + 1) + "\n")
-                                                        if elFeature == '':
-                                                            the_file.write(
-                                                                'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p  ' + str(
-                                                                    nbProc) + ' -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b ' + elBest + ' -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g ' + elGroup + ' -n 0 -s ' + elStrategy + "\n")
-                                                        else:
-                                                            the_file.write(
-                                                                'srun /logiciels/Python-2.7/bin/python2.7 /projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p  ' + str(
-                                                                    nbProc) + ' -t ' + elType + ' -x -' + elFold + ' -r ' + elRound + ' -b ' + elBest + ' -c ' + elCollection + ' -l ' + elLife + ' -i ' + elImpact + ' -g ' + elGroup + ' -n 0 -s ' + elStrategy + ' -a -f ' + elFeature + "\n")
-                                                    script_file.write("sbatch " + dirname + sbatch_filename + "\n")
-
-    print count
-'''
-
-
 def checkDoneXp():
     def runOk(dirFold):
         # print '\tChecking if ', dirFold, "is over...."
         if not os.path.exists(dirFold): return False
         listDirXp = os.listdir(dirFold)
         print dirFold
-        print '\t\t nb expe:', len(listDirXp), ' vs nbRequired expe:', xpNb
+        #print '\t\t nb expe:', len(listDirXp), ' vs nbRequired expe:', xpNb
 
         if len(listDirXp) < xpNb:
             # print '\t\tNot enough....'
@@ -151,13 +82,15 @@ def checkDoneXp():
         for fold in listFold:
             dirResultRun = dirResult + el + "/" + fold + "/training/"
             # if runOk(dirResultRun): listCompleted.append(dirResultRun)
-            listCompleted.append(dirResultRun)
+            listCompleted.append((dirResultRun,el))
 
     return listCompleted
 
 
-def extractMapXp(fold):
+def extractMapXp(el):
     # print "[extractMapXp", fold, "]"
+    fold = el[0]
+    dataset = el[1]
     maps[fold] = {}
     table = []
 
@@ -181,6 +114,12 @@ def extractMapXp(fold):
                          "/osirim/sig/PROJET/PRINCESS/qrels/robust2004/qrels.robust2004.txt", '"' + outfilename + '"',
                          ">",
                          '"' + outfilenameeval + '"']
+            else :
+                #TODO
+                table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", "-M50", "-q",
+                         "/osirim/sig/PROJET/PRINCESS/qrels/"+dataset+"/qrels.txt", '"' + outfilename + '"',
+                         ">",
+                         '"' + outfilenameeval + '"']
             # print "command", " ".join(table)
             os.system(" ".join(table))
 
@@ -193,10 +132,11 @@ def extractMapXp(fold):
                         # print maps
 
 
-def runTest(fold, best, i):
+def runTest(el, best, i):
+    fold = el[0]
     idfold = fold.split("/")[-3]
     header = "#!/bin/sh\n#SBATCH --job-name=best" + str(
-        i) + "\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=best" + str(
+        i) + "\n#SBATCH --mail-type=FAIL\n#SBATCH --mail-user=pitarch@irit.fr\n#SBATCH --output=best" + str(
         i) + ".out\n#SBATCH --error=best" + str(i) + ".err \n#SBATCH -c " + str(
         nbProc + 1) + "\n "
     command = "srun /logiciels/Python-2.7/bin/python2.7 " \
@@ -223,7 +163,8 @@ def runTest(fold, best, i):
         # os.system("sbatch scriptBest_" + str(i) + ".sh")
 
 
-def findBestConfig(fold):
+def findBestConfig(el):
+    fold = el[0]
     listResults = {}
     listResults = maps[fold]
     sorted_x = sorted(listResults.items(), key=operator.itemgetter(1), reverse=True)
