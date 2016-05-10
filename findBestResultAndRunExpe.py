@@ -165,6 +165,7 @@ def runTest(el, best, i):
 
 
 def findBestConfig(el):
+    print "el=>", el
     fold = el[0]
     listResults = {}
     listResults = maps[fold]
