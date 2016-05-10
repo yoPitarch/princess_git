@@ -196,13 +196,13 @@ def main():
 
     # load appropriate queries for this run
     if "web" in collection_name:
-        output_directory += "web2014/" + str(fold) + "/"
-        with open("/osirim/sig/PROJET/PRINCESS/queries/WEB2014/folds/" + str(fold) + ".txt", "r") as fq:
+        output_directory += "WEB2014/" + str(fold) + "/"
+        with open("/osirim/sig/PROJET/PRINCESS/queries/web2014/folds/" + str(fold) + ".txt", "r") as fq:
             for l in fq:
                 queriesToProcess.append(l.strip())
     elif "robust" in collection_name:
-        output_directory += "robust2004/" + str(fold) + "/"
-        with open("/osirim/sig/PROJET/PRINCESS/queries/ROBUST2004/folds/" + str(fold) + ".txt", "r") as fq:
+        output_directory += "ROBUST2004/" + str(fold) + "/"
+        with open("/osirim/sig/PROJET/PRINCESS/queries/robust2004/folds/" + str(fold) + ".txt", "r") as fq:
             for l in fq:
                 queriesToProcess.append(l.strip())
     else:
