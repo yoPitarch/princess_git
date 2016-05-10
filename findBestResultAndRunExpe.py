@@ -89,7 +89,7 @@ def checkDoneXp():
 
 
 def extractMapXp(el):
-    # print "[extractMapXp", fold, "]"
+    print "[extractMapXp", el, "]"
     fold = el[0]
     dataset = el[1]
     maps[fold] = {}
@@ -111,6 +111,7 @@ def extractMapXp(el):
                          ">",
                          '"' + outfilenameeval + '"']
             elif "robust" in xp:
+                print "ici"
                 table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", "-M50", "-q",
                          "/osirim/sig/PROJET/PRINCESS/qrels/robust2004/qrels.txt", '"' + outfilename + '"',
                          ">",
