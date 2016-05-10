@@ -96,7 +96,7 @@ def extractMapXp(el):
     table = []
 
     for xp in os.listdir(fold):
-        # print "\t xp:", xp
+        print "\t xp:", xp
         outfilename = join(fold, xp) + "/results.txt"
         outfilenameeval = join(fold, xp) + "/results_trec.txt"
 
