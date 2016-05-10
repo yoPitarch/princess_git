@@ -88,10 +88,10 @@ def loadDocsToCompete(c, q):
 def main():
     # Handle user options
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "dht:i:l:s:n:r:f:vc:b:g:am:o:p:x:",
+        opts, args = getopt.getopt(sys.argv[1:], "dht:i:l:s:n:r:f:vc:b:g:am:o:p:x:w:y:z:",
                                    ["debug", "help", "type=", "impact=", "life=", "strategy=", "nbFeats=", "rounds=",
                                     "featureList=", "verbose", 'collection=', 'group=', 'accepted', 'model=', 'optim',
-                                    'process=', "cross="])
+                                    'process=', "cross=", "boost=", "alpha=", "topX="])
     except getopt.GetoptError as err:
         # print help information and exit:
         print str(err)  # will print something like "option -a not recognized"
@@ -110,6 +110,11 @@ def main():
     collection_name = 'trec_adhoc_lee'
     output_directory = "/osirim/sig/PROJET/PRINCESS/results/princess/"
     impact = 0
+    boost = "undifferentiated"  # or upper or seed
+    alpha = 3  # valide si upper or seed
+    topx = 20  # valide si seed
+
+
     features_to_remove = []
     strategy = 1
     process = 100
@@ -163,6 +168,12 @@ def main():
             nbFeats = int(a)
         elif o in ("-s", "--strategy"):
             strategy = int(a)
+        elif o in ("-w", "--boost"):
+            boost = str(a)
+        elif o in ("-y", "--alpha"):
+            alpha = int(a)
+        elif o in ("-z", "--topX"):
+            topx = int(a)
         elif o in ("-x", "--cross"):
             fold = a
             if '-' in fold:
@@ -387,8 +398,13 @@ def usage():
         -d [--documents] Set the number of documents that shall participate to the final tournament (preferably a power of 2) \n \
         -r [--rounds] Set the number of rounds in the swiss style tournament \n\
         -g [--groups] Set the nuumber of groups in the swiss style tournament \n\
-        -v [--verbose] Activate the verbose mode (for debugging purpose)"
+        -v [--verbose] Activate the verbose mode (for debugging purpose)" \
+          "" \
+          "" \
+          ""
 
+
+# TODO: mettre a jour le usage
 
 def function_to_debug():
     doc_a = Document("DocA",

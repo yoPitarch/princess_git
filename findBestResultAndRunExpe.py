@@ -168,6 +168,7 @@ def findBestConfig(el):
     fold = el[0]
     listResults = {}
     listResults = maps[fold]
+    print "listResults:",listResults
     sorted_x = sorted(listResults.items(), key=operator.itemgetter(1), reverse=True)
     best = sorted_x[0][0]
     #print sorted_x[0]
