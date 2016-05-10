@@ -186,6 +186,7 @@ if len(l) > 0:
     print "Au moins une expé est finie !!!"
     # sys.exit()
     for i, fold in enumerate(l):
+        print"FOLD:",fold
         extractMapXp(fold)
         best = findBestConfig(fold)
         runTest(fold, best, i)
