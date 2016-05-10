@@ -100,7 +100,7 @@ def extractMapXp(el):
         outfilename = join(fold, xp) + "/results.txt"
         outfilenameeval = join(fold, xp) + "/results_trec.txt"
 
-        os.system("rm "+outfilenameeval)
+        #os.system("rm "+outfilenameeval)
 
         if not (os.path.exists(outfilenameeval)):
 
@@ -144,7 +144,7 @@ def runTest(el, best, i):
         i) + ".out\n#SBATCH --error=best" + str(i) + ".err \n#SBATCH -c " + str(
         nbProc + 1) + "\n "
     command = "srun /logiciels/Python-2.7/bin/python2.7 " \
-              "/projets/sig/PROJET/PRINCESS/code/princess_git/princess.py -p " + str(nbProc) + " -x " + idfold
+              "/projets/sig/PROJET/PRINCESS/code/princess_git/princess_cikm.py -p " + str(nbProc) + " -x " + idfold
     t = best.split("-")
     for param in t:
         tparam = param.split(":")
