@@ -186,6 +186,8 @@ def main():
             if '-' in fold:
                 step = "training"
                 fold = -int(a)
+            elif a == '0':
+                step = "all"
             else:
                 step = "test"
 
@@ -195,12 +197,12 @@ def main():
     # load appropriate queries for this run
     if "web" in collection_name:
         output_directory += "web2014/" + str(fold) + "/"
-        with open("/osirim/sig/PROJET/PRINCESS/queries/web2014/folds/" + str(fold) + ".txt", "r") as fq:
+        with open("/osirim/sig/PROJET/PRINCESS/queries/WEB2014/folds/" + str(fold) + ".txt", "r") as fq:
             for l in fq:
                 queriesToProcess.append(l.strip())
     elif "robust" in collection_name:
         output_directory += "robust2004/" + str(fold) + "/"
-        with open("/osirim/sig/PROJET/PRINCESS/queries/robust2004/folds/" + str(fold) + ".txt", "r") as fq:
+        with open("/osirim/sig/PROJET/PRINCESS/queries/ROBUST2004/folds/" + str(fold) + ".txt", "r") as fq:
             for l in fq:
                 queriesToProcess.append(l.strip())
     else:
@@ -223,8 +225,11 @@ def main():
 
     if step == "training":
         output_directory += "training/"
-    else:
+    elif step == "test":
         output_directory += "test/"
+    else :
+        output_directory += "all/"
+
 
     if len(features_to_remove) > 0:
         outputFolderName = 't:' + type_tournament + '-o:' + optim + '-r:' + str(nb_rounds) + '-b:' + str(
@@ -264,11 +269,12 @@ def main():
                 processQuery = False
             else:
                 processQuery = True
-        else:
+        elif step=="test" :
             if q in queriesToProcess:
                 processQuery = True
             else:
                 processQuery = False
+        else : processQuery = True
 
         if processQuery:
             print "Query " + q
