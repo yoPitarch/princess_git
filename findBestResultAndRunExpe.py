@@ -78,8 +78,9 @@ def checkDoneXp():
 
     listCompleted = []
     for el in listCollectionDir:
-        # print "list dataset:", el
+        print "list dataset:", el
         for fold in listFold:
+            print fold
             dirResultRun = dirResult + el + "/" + fold + "/training/"
             # if runOk(dirResultRun): listCompleted.append(dirResultRun)
             listCompleted.append((dirResultRun,el))
@@ -105,13 +106,13 @@ def extractMapXp(el):
             # print "\t\t outfilenameeval:", outfilenameeval
             if "web2014" in xp:
                 table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", '-M50', "-q",
-                         "/osirim/sig/PROJET/PRINCESS/qrels/web2014/qrels.all.web2014dedup.txt",
+                         "/osirim/sig/PROJET/PRINCESS/qrels/web2014/qrels.txt",
                          '"' + outfilename + '"',
                          ">",
                          '"' + outfilenameeval + '"']
             elif "robust" in xp:
                 table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", "-M50", "-q",
-                         "/osirim/sig/PROJET/PRINCESS/qrels/robust2004/qrels.robust2004.txt", '"' + outfilename + '"',
+                         "/osirim/sig/PROJET/PRINCESS/qrels/robust2004/qrels.txt", '"' + outfilename + '"',
                          ">",
                          '"' + outfilenameeval + '"']
             else :
@@ -120,7 +121,7 @@ def extractMapXp(el):
                          "/osirim/sig/PROJET/PRINCESS/qrels/"+dataset+"/qrels.txt", '"' + outfilename + '"',
                          ">",
                          '"' + outfilenameeval + '"']
-            # print "command", " ".join(table)
+            print "command", " ".join(table)
             os.system(" ".join(table))
 
         with open(outfilenameeval, 'r') as myFile:
