@@ -543,7 +543,7 @@ def findBestConfig(fold):
 # Expe generation
 generate_script()
 
-sys.exit()
+#sys.exit()
 
 # Script execution
 os.system("scancel -u quaesig")
