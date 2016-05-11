@@ -23,13 +23,13 @@ listStrategy = ['0']
 nbProc = 20
 listFold = ["1", "2", "3", "4", "5"]
 # listFold = ["3", "4", "5"]
-listType = ['robin', 'grouprobinoptim']
+listType = ['swiss']
 listFeatureLetor = ['']
 listFeature = ['', ','.join(['f' + str(x) for x in range(3, 52, 3)]),
                ','.join(['f' + str(x) for x in range(28, 46)])]
 
 listImpact = ['0','1']
-listRound = ['10', '20', '30']
+listRound = ['10', '20', '50', '100']
 # listCollection = ['indri_web2014clueweb12_adhoc_max50', 'indri_robust2004_max50']
 listCollection = [ "NP2003", "NP2004", "OHSUMED",
                   "TD2003", "TD2004", "HP2003", "HP2004"]
