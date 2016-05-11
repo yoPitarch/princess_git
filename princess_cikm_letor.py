@@ -305,6 +305,7 @@ def main():
                             list_feat[model] = Feature(model, 0.0)
                         list_doc.append(Document(name, list_feat))
                         # sys.exit()
+            print 'nb docs:',len(list_doc)
 
             colName = collection_name.lower() + "_std"
             # print colName
