@@ -548,8 +548,10 @@ sys.exit()
 # Script execution
 os.system("scancel -u quaesig")
 os.system("chmod a+x " + dirname + "run.sh")
-sys.exit()
+#sys.exit()
 os.system(dirname + "run.sh")
+sys.exit()
+
 
 interval = 1000
 startTime = time.time()
