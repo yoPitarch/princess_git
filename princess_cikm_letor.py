@@ -134,9 +134,6 @@ def main():
     step = "training"  # ou "test"
     queriesToProcess = []
 
-    strategy = ['f48', 'f17', 'f19', 'f16', 'f46', 'f9', 'f21', 'f3', 'f39', 'f7', 'f40', 'f6', 'f37', 'f42', 'f2',
-                'f15', 'f25', 'f33', 'f36', 'f10', 'f30', 'f51', 'f28', 'f43', 'f45', 'f34', 'f24', 'f13', 'f50', 'f27',
-                'f31', 'f1', 'f35', 'f14', 'f47', 'f41', 'f4', 'f22', 'f12', 'f8', 'f26', 'f44']
 
     for o, a in opts:
         if o in ("-v", "--verbose"):
