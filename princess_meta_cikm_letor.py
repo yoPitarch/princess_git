@@ -546,7 +546,7 @@ generate_script()
 #sys.exit()
 
 # Script execution
-os.system("scancel -u quaesig")
+#os.system("scancel -u quaesig")
 os.system("chmod a+x " + dirname + "run.sh")
 #sys.exit()
 os.system(dirname + "run.sh")
