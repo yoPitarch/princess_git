@@ -13,6 +13,7 @@ from pymongo import MongoClient
 def getQRel(f,q,n):
 
     tofind = str(q)+" 0 "+n
+    print tofind
     with open(f,'r') as fin:
         for line in fin:
             if tofind in line:
