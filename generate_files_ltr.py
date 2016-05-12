@@ -27,6 +27,32 @@ def getQRel(f,q,n):
 
 
 
+col = "indri_web2014clueweb12_adhoc_max50"
+connection = MongoClient(host='co2-ni01.irit.fr', port=28018)
+db = connection.princess
+collection = db[col.lower()]
+queries = collection.distinct('query')
+
+feats = set()
+for q in queries:
+    print q
+    qstr = str(q)
+    list = collection.find({'query': qstr}, {'_id': 0, 'docs': 1})
+    for i in list:
+        # print i
+        for d in i['docs']:
+            line = " qid:"+qstr
+            name = d['doc_name']
+            # list_feat = []
+            count = 1
+            for f in d['features']:
+                feats.add(f)
+
+print feats
+sys.exit()
+
+
+
 
 
 dirname = '/osirim/sig/PROJET/PRINCESS/code/scripts_experiments_cikm_letor/'
