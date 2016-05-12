@@ -18,7 +18,11 @@ def getQRel(f,q,n):
         for line in fin:
             if tofind in line:
                 #print line
-                return line.split(" ")[-1].strip()
+                val = line.split(" ")[-1].strip()
+                if "-" in val :
+                    return "0"
+                else :
+                    return val
     return "0"
 
 
@@ -67,7 +71,10 @@ for col in listCollection:
                     # list_feat = []
                     count = 1
                     for f in d['features']:
-                        line+=" "+str(count)+":"+str(d['features'][f])
+                        if "web" in col and count != 14 :
+                            line+=" "+str(count)+":"+str(d['features'][f])
+                        if  "robust" in col and count != 13:
+                            line += " " + str(count) + ":" + str(d['features'][f])
                         count += 1
 
                     line+=" #docid = "+name+"\n"
