@@ -48,24 +48,23 @@ for col in listCollection:
     collection = db[col.lower()]
     queries = collection.distinct('query')
 
-    for q in queries:
+    with open(colDir+"/all.txt", "w") as fout:
+        for q in queries:
+            data.setdefault(q,{})
+            qstr = str(q)
+            list = collection.find({'query': qstr}, {'_id': 0, 'docs': 1})
+            for i in list:
+                # print i
+                for d in i['docs']:
+                    line = " qid:"+qstr
+                    name = d['doc_name']
+                    # list_feat = []
+                    count = 1
+                    for f in d['features']:
+                        line+=" "+str(count)+":"+str(d['features'][f])
+                        count += 1
 
-        data.setdefault(q,{})
-
-        qstr = str(q)
-        list = collection.find({'query': qstr}, {'_id': 0, 'docs': 1})
-        for i in list:
-            # print i
-            for d in i['docs']:
-                line = " qid:"+qstr
-                name = d['doc_name']
-                # list_feat = []
-                count = 1
-                for f in d['features']:
-                    line+=" "+str(count)+":"+str(d['features'][f])
-                    count += 1
-
-                line+="#docid = "+name+"\n"
-                line = getQRel(pathQRel,q,name)
+                    line+="#docid = "+name+"\n"
+                    line = getQRel(pathQRel,q,name) + line
 
 
