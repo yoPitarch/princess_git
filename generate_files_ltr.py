@@ -13,11 +13,11 @@ from pymongo import MongoClient
 def getQRel(f,q,n):
 
     tofind = str(q)+" 0 "+n
-    print tofind
+    #print tofind
     with open(f,'r') as fin:
         for line in fin:
             if tofind in line:
-                print line
+                #print line
                 return line.split(" ")[-1].strip()
     return "0"
 
@@ -33,6 +33,8 @@ dirResult = '/osirim/sig/PROJET/PRINCESS/data/'
 listCollection = ['indri_web2014clueweb12_adhoc_max50', 'indri_robust2004_max50']
 
 for col in listCollection:
+
+    print col
 
     if "web" in col:
         colDir = dirResult+"WEB2014"
