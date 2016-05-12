@@ -72,8 +72,10 @@ for col in listCollection:
                     count = 1
                     t = [str(0.0)]*14
                     print t
+                    print d['features']
                     #for f in d['features']:
                     for i in range(0,15):
+                        print i
                         if "f"+str(i+1)  in d['features']:
                             print d['features']["f"+str(i+1)]
                             t[i] = str(d['features']["f"+str(i+1)])
