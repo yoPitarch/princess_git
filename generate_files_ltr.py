@@ -40,7 +40,7 @@ for col in listCollection:
         colDir = dirResult+"WEB2014"
         pathQRel = '/osirim/sig/PROJET/PRINCESS/qrels/WEB2014/qrels.txt'
     else :
-        dir = dirResult+"ROBUST2004"
+        colDir = dirResult+"ROBUST2004"
         pathQRel = '/osirim/sig/PROJET/PRINCESS/qrels/ROBUST2004/qrels.txt'
 
     os.system("rm -r "+colDir)
