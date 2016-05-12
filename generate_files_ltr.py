@@ -70,12 +70,15 @@ for col in listCollection:
                     name = d['doc_name']
                     # list_feat = []
                     count = 1
-                    for f in d['features']:
-                        if "web" in col and count != 14 :
-                            line+=" "+str(count)+":"+str(d['features'][f])
-                        if  "robust" in col and count != 13:
-                            line += " " + str(count) + ":" + str(d['features'][f])
-                        count += 1
+                    t = [str(0.0)]*14
+                    #for f in d['features']:
+                    for i in range(0,15):
+                        if "f"+str(i+1)  in d['features']:
+                            t[i] = str(d['features']["f"+str(i+1)])
+
+                    for ind, el in enumerate(t):
+                        line+=" "+str(ind+1)+":"+el
+
 
                     line+=" #docid = "+name+"\n"
                     line = getQRel(pathQRel,q,name) + line
