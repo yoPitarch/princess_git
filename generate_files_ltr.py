@@ -17,7 +17,10 @@ def getQRel(f,q,n):
     with open(f,'r') as fin:
         for line in fin:
             if tofind in line:
+                print line
                 return line.split(" ")[-1].strip()
+                sys.exit()
+    return "0"
 
 
 
