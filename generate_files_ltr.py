@@ -55,6 +55,7 @@ for col in listCollection:
 
     with open(colDir+"/all.txt", "w") as fout:
         for q in queries:
+            print q
             data.setdefault(q,{})
             qstr = str(q)
             list = collection.find({'query': qstr}, {'_id': 0, 'docs': 1})
@@ -71,6 +72,7 @@ for col in listCollection:
 
                     line+="#docid = "+name+"\n"
                     line = getQRel(pathQRel,q,name) + line
+                    print line
                     fout.write(line)
 
 
