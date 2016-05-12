@@ -73,11 +73,11 @@ for col in listCollection:
                     name = d['doc_name']
                     # list_feat = []
                     count = 1
-                    print d['features']
+                    #print d['features']
                     #for f in d['features']:
                     for i,el in enumerate(tabFeats):
                         if el  in d['features']:
-                            line += " " + str(i+ 1) + ":" + d['features'][el]
+                            line += " " + str(i+ 1) + ":" + str(d['features'][el])
                         else :
                             line += " " + str(i + 1) + ":0.0"
 
