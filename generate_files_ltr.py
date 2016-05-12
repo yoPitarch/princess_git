@@ -70,7 +70,7 @@ for col in listCollection:
                         line+=" "+str(count)+":"+str(d['features'][f])
                         count += 1
 
-                    line+="#docid = "+name+"\n"
+                    line+=" #docid = "+name+"\n"
                     line = getQRel(pathQRel,q,name) + line
                     print line
                     fout.write(line)
