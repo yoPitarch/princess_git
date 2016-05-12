@@ -27,29 +27,6 @@ def getQRel(f,q,n):
 
 
 
-col = "indri_web2014clueweb12_adhoc_max50"
-connection = MongoClient(host='co2-ni01.irit.fr', port=28018)
-db = connection.princess
-collection = db[col.lower()]
-queries = collection.distinct('query')
-
-feats = set()
-for q in queries:
-    print q
-    qstr = str(q)
-    list = collection.find({'query': qstr}, {'_id': 0, 'docs': 1})
-    for i in list:
-        # print i
-        for d in i['docs']:
-            line = " qid:"+qstr
-            name = d['doc_name']
-            # list_feat = []
-            count = 1
-            for f in d['features']:
-                feats.add(f)
-
-print feats
-sys.exit()
 
 
 
@@ -58,7 +35,7 @@ sys.exit()
 dirname = '/osirim/sig/PROJET/PRINCESS/code/scripts_experiments_cikm_letor/'
 dirResult = '/osirim/sig/PROJET/PRINCESS/data/'
 
-
+tabFeats = ['f3', 'f45', 'f48', 'f6', 'f51', 'f9', 'f18', 'f30', 'f21', 'f33', 'f27', 'f24', 'f12', 'f15']
 
 listCollection = ['indri_web2014clueweb12_adhoc_max50', 'indri_robust2004_max50']
 
@@ -96,19 +73,13 @@ for col in listCollection:
                     name = d['doc_name']
                     # list_feat = []
                     count = 1
-                    t = [str(0.0)]*14
-                    print t
                     print d['features']
                     #for f in d['features']:
-                    for i in range(0,15):
-                        print i
-                        if "f"+str(i+1)  in d['features']:
-                            print d['features']["f"+str(i+1)]
-                            t[i] = str(d['features']["f"+str(i+1)])
-                            print "t[i]", t[i]
-
-                    for ind, el in enumerate(t):
-                        line+=" "+str(ind+1)+":"+el
+                    for i,el in enumerate(tabFeats):
+                        if el  in d['features']:
+                            line += " " + str(i+ 1) + ":" + d['features'][el]
+                        else :
+                            line += " " + str(i + 1) + ":0.0"
 
 
                     line+=" #docid = "+name+"\n"
