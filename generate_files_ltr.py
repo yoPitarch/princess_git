@@ -19,7 +19,6 @@ def getQRel(f,q,n):
             if tofind in line:
                 print line
                 return line.split(" ")[-1].strip()
-                sys.exit()
     return "0"
 
 
@@ -70,5 +69,6 @@ for col in listCollection:
 
                     line+="#docid = "+name+"\n"
                     line = getQRel(pathQRel,q,name) + line
+                    fout.write(line)
 
 
