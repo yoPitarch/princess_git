@@ -82,7 +82,7 @@ def generate_script():
             count = 0
             for elType in listType:
                 if "robin" in elType:
-                    nbProc = 10
+                    nbProc = 1
                 else:
                     nbProc = 1
                 for elCollection in listCollection:
