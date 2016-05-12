@@ -72,7 +72,7 @@ for col in listCollection:
 
                     line+=" #docid = "+name+"\n"
                     line = getQRel(pathQRel,q,name) + line
-                    print line
+                    #print line
                     fout.write(line)
 
 
