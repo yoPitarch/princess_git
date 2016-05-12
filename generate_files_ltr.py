@@ -77,6 +77,7 @@ for col in listCollection:
                         if "f"+str(i+1)  in d['features']:
                             print d['features']["f"+str(i+1)]
                             t[i] = str(d['features']["f"+str(i+1)])
+                            print "t[i]", t[i]
 
                     for ind, el in enumerate(t):
                         line+=" "+str(ind+1)+":"+el
