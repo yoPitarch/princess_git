@@ -30,7 +30,7 @@ listRound = ['10', '20', '30']
 listCollection = ['indri_web2014clueweb12_adhoc_max50', 'indri_robust2004_max50',"NP2003", "NP2004", "OHSUMED",
                   "TD2003", "TD2004", "HP2003", "HP2004"]
 # listCollection = ['indri_web2014clueweb12_adhoc_max50']
-listCollectionDir = ["web2014", 'robust2004', "NP2003", "NP2004", "OHSUMED", "TD2003", "TD2004", "HP2003", "HP2004"]
+listCollectionDir = ["WEB2014", 'ROBUST2004', "NP2003_50", "NP2004_50", "OHSUMED_50", "TD2003_50", "TD2004_50", "HP2003_50", "HP2004_50"]
 #listCollectionDir = ["web2014"]
 listLife = ['0', '2', '5', '10', '20']
 listStrategy = ['0']
