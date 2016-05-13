@@ -100,7 +100,7 @@ def extractMapXp(el):
         outfilename = join(fold, xp) + "/results.txt"
         outfilenameeval = join(fold, xp) + "/results_trec.txt"
 
-        #os.system("rm "+outfilenameeval)
+        os.system("rm "+outfilenameeval)
 
         if not (os.path.exists(outfilenameeval)):
 
