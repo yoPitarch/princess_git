@@ -104,8 +104,8 @@ def extractMapXp(el):
 
         if not (os.path.exists(outfilenameeval)):
 
-            # print "\t\t outfilename:", outfilename
-            # print "\t\t outfilenameeval:", outfilenameeval
+            print "\t\t outfilename:", outfilename
+            print "\t\t outfilenameeval:", outfilenameeval
             if "web2014" in xp:
                 table = ["/osirim/sig/CORPUS-TRAV/TREC-ADHOC/trec_eval.9.0/trec_eval", '-M50', "-q",
                          "/osirim/sig/PROJET/PRINCESS/qrels/web2014/qrels.txt",
